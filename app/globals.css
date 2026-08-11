@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #FDF6EF;
+    --foreground: #1F1D1B;
+    --card: #FFFFFF;
+    --card-foreground: #1F1D1B;
+    --primary: #E8734A;
+    --primary-hover: #D66239;
+    --primary-foreground: #FFFFFF;
+    --muted: #F3EAE1;
+    --muted-foreground: #6E6B68;
+    --border: #EFE6DD;
+    --ring: #E8734A;
+  }
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-terracotta: #E8734A;
+  --color-terracotta-hover: #D66239;
+  --color-cream: #FDF6EF;
+  --color-cream-muted: #F3EAE1;
+  --color-dark-text: #1F1D1B;
+  --color-muted-text: #6E6B68;
+  --radius-card: 1.25rem;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  min-height: 100vh;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Custom Utilities for CookDish design */
+.card-shadow {
+  box-shadow: 0 4px 20px -2px rgba(232, 115, 74, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+}
+
+.pill-chip {
+  transition: all 0.2s ease-in-out;
+}
+.pill-chip:hover {
+  transform: translateY(-1px);
+}
