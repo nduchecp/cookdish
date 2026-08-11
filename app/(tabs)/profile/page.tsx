@@ -43,8 +43,9 @@ export default function ProfilePage() {
           <p className="text-xs sm:text-sm text-[#6E6B68]">Manage your cooking history, meal plans, and preferences</p>
         </div>
         <button
+          type="button"
           onClick={handleShare}
-          className="flex items-center gap-2 text-xs font-bold bg-white border border-[#EFE6DD] text-[#1F1D1B] px-3.5 py-2 rounded-2xl hover:border-[#E8734A] transition-all shadow-xs"
+          className="flex items-center gap-2 text-xs font-bold bg-white border border-[#EFE6DD] text-[#1F1D1B] px-3.5 py-2 rounded-2xl hover:border-[#E8734A] transition-all shadow-xs cursor-pointer active:scale-95"
         >
           {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4 text-[#E8734A]" />}
           <span>{copied ? "Link Copied!" : "Share Profile"}</span>
@@ -270,18 +271,19 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Bottom Footer & Account Controls */}
-      <div className="pt-4 flex flex-col items-center justify-center space-y-3 text-center border-t border-[#EFE6DD]">
+      {/* Prominent High-End Full-Width Sign Out Action Button */}
+      <div className="pt-4 flex flex-col items-center justify-center space-y-4 text-center border-t border-[#EFE6DD]">
+        <button
+          type="button"
+          className="w-full sm:w-auto min-w-[280px] inline-flex items-center justify-center gap-2.5 text-rose-600 font-extrabold text-sm bg-rose-50 hover:bg-rose-600 hover:text-white border border-rose-200 px-8 py-4 rounded-2xl transition-all shadow-xs cursor-pointer active:scale-95"
+        >
+          <LogOut className="w-5 h-5" />
+          <span>Sign Out of Account</span>
+        </button>
+
         <p className="text-xs text-[#6E6B68]">
           CookDish App v2.4.0 • Connected to <span className="font-bold text-[#E8734A]">TheMealDB & Spoonacular</span>
         </p>
-        <button
-          type="button"
-          className="inline-flex items-center gap-2 text-rose-600 font-bold text-sm bg-rose-50 hover:bg-rose-100 border border-rose-100 px-5 py-2.5 rounded-2xl transition-colors cursor-pointer"
-        >
-          <LogOut className="w-4 h-4" />
-          <span>Sign Out of Account</span>
-        </button>
       </div>
     </div>
   );
