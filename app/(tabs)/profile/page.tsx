@@ -211,7 +211,7 @@ export default function ProfilePage() {
             href="/profile/shopping-list"
             className="flex items-center justify-between p-5 hover:bg-[#FDF6EF] transition-colors group"
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-[#E8734A] gap-4">
               <div className="w-12 h-12 rounded-2xl bg-[#FDF6EF] text-[#E8734A] flex items-center justify-center border border-[#EFE6DD] group-hover:bg-[#E8734A] group-hover:text-white transition-all shadow-xs">
                 <ShoppingBag className="w-6 h-6" />
               </div>
@@ -282,7 +282,7 @@ export default function ProfilePage() {
         </button>
 
         <p className="text-xs text-[#6E6B68]">
-          CookDish App v2.4.0 • Connected to <span className="font-bold text-[#E8734A]">TheMealDB & Spoonacular</span>
+          CookDish App v2.5.0 • Live Vercel Release
         </p>
       </div>
     </div>
