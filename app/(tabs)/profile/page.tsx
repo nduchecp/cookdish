@@ -19,7 +19,8 @@ import {
   Edit3,
   Sliders,
   ShieldCheck,
-  Check
+  Check,
+  Utensils
 } from "lucide-react";
 
 export default function ProfilePage() {
@@ -165,7 +166,7 @@ export default function ProfilePage() {
             🌶️ Extra Spicy (Habanero Lover)
           </span>
           <span className="text-xs font-bold bg-[#FDF6EF] text-[#1F1D1B] border border-[#EFE6DD] px-3 py-1.5 rounded-xl flex items-center gap-1.5">
-            🇳🇬 Nigerian Traditional Cuisine
+            <Utensils className="w-3.5 h-3.5 text-[#E8734A]" /> Nigerian Traditional Cuisine
           </span>
           <span className="text-xs font-bold bg-[#FDF6EF] text-[#1F1D1B] border border-[#EFE6DD] px-3 py-1.5 rounded-xl flex items-center gap-1.5">
             💪 High Protein Focus
