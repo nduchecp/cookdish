@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, ShoppingBag, Check, Trash2, Plus, RefreshCw, Utensils, CheckCircle2 } from "lucide-react";
-import { NIGERIAN_LOCAL_DISHES } from "@/lib/api/recipes";
 
 interface ShoppingItem {
   id: string;
@@ -14,7 +13,7 @@ interface ShoppingItem {
   checked: boolean;
 }
 
-// Real ingredients aggregated from authentic dishes (Egusi, Jollof, Oha, Suya, Pounded Yam)
+// Real authentic ingredients aggregated from local dishes (Egusi, Jollof, Oha, Suya, Pounded Yam)
 const REAL_NIGERIAN_INGREDIENTS: ShoppingItem[] = [
   {
     id: "ing-1",
