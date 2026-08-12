@@ -268,6 +268,30 @@ export default function ProfilePage() {
             </div>
             <ChevronRight className="w-5 h-5 text-[#6E6B68] group-hover:text-[#E8734A] transition-colors" />
           </Link>
+
+          {/* Super Admin Dashboard */}
+          <Link
+            href="/admin"
+            className="flex items-center justify-between p-5 bg-gradient-to-r from-[#1F1D1B] to-[#2D2A26] text-white hover:from-[#2D2A26] hover:to-[#1F1D1B] transition-colors group"
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-[#E8734A] text-white flex items-center justify-center font-extrabold shadow-sm text-lg">
+                👑
+              </div>
+              <div>
+                <span className="font-extrabold text-white block text-base group-hover:text-[#E8734A] transition-colors flex items-center gap-2">
+                  Super Admin Control Center
+                  <span className="text-[9px] font-extrabold uppercase bg-[#E8734A] text-white px-2 py-0.5 rounded-full">
+                    Super Admin
+                  </span>
+                </span>
+                <span className="text-xs text-white/70 font-medium">
+                  Manage recipes, users directory, and API health status
+                </span>
+              </div>
+            </div>
+            <ChevronRight className="w-5 h-5 text-white/70 group-hover:text-[#E8734A] transition-colors" />
+          </Link>
         </div>
       </div>
 
