@@ -11,7 +11,7 @@ c:\Users\Promise\3D Objects\RECIPE APP
 ├── app/
 │   ├── (tabs)/
 │   │   ├── categories/
-│   │   │   └── page.tsx              # Coded compact category cards with vector icons
+│   │   │   └── page.tsx              # Coded compact category cards with vector icons & International card
 │   │   ├── my-recipes/
 │   │   │   └── page.tsx              # Coded saved, authored, and collection tabs
 │   │   ├── profile/
@@ -22,7 +22,7 @@ c:\Users\Promise\3D Objects\RECIPE APP
 │   │   │   ├── settings/
 │   │   │   │   └── page.tsx          # Coded app units & dietary preferences
 │   │   │   ├── shopping-list/
-│   │   │   │   └── page.tsx          # Coded Smart Shopping List & custom item form
+│   │   │   │   └── page.tsx          # Coded Smart Shopping List & atomic custom item form
 │   │   │   └── page.tsx              # Coded Profile Hub, stats grid & chef banner
 │   │   ├── search/
 │   │   │   └── page.tsx              # Coded mobile search input with searchParams sync
@@ -34,13 +34,13 @@ c:\Users\Promise\3D Objects\RECIPE APP
 │   │           ├── cook/
 │   │           │   ├── CookingClientView.tsx # Coded z-[100] fullscreen cooking assistant
 │   │           │   └── page.tsx             # Coded async route params fetcher
-│   │           ├── RecipeClientView.tsx     # Coded 3-col responsive detail layout
+│   │           ├── RecipeClientView.tsx     # Coded 3-col responsive detail layout & unified CTA
 │   │           └── page.tsx                 # Coded async recipe detail loader
 │   ├── globals.css                   # Coded design system tokens & custom utilities
 │   └── layout.tsx                    # Coded Root layout & fixed mobile touch blocker
 ├── lib/
 │   └── api/
-│       ├── recipes.ts                # Coded local recipes database & multi-API aggregator
+│       ├── recipes.ts                # Coded local recipes database, atomic ingredients, detailed chef steps & multi-API aggregator
 │       ├── spoonacular.ts            # Coded Spoonacular API fetcher
 │       ├── edamam.ts                 # Coded Edamam API fetcher
 │       └── mealdatabase.ts           # Coded TheMealDB API fetcher
@@ -53,77 +53,49 @@ c:\Users\Promise\3D Objects\RECIPE APP
 ## 💻 Detailed Code Implementation Breakdown
 
 ### 1. `lib/api/recipes.ts` (Core Recipe Data & Multi-API Aggregator)
-- **Coded `NIGERIAN_LOCAL_DISHES` Array**: Defined 13 normalized recipes with structured instructions, ingredients, prep/cook times, difficulty ratings, and accurate Unsplash imagery.
-- **Cultural Recipe Accuracy**:
-  - `Authentic Nigerian Egusi Soup` (Melon seed stew)
-  - `Traditional Igbo Oha Soup (Ofe Oha)` (Igbo heritage with cocoyam & ogiri)
-  - `Traditional Nigerian Ogbono Draw Soup (Ofe Ogbono)` (Separated from Okra)
-  - `Authentic Nigerian Fresh Okra Soup (Ofe Okwuru)` (Separated from Ogbono)
-  - `Pounded Yam (Iyan)` (Smooth white swallow dough)
-  - `Smoky Nigerian Party Jollof Rice` (Parboiled rice with tatashe)
-  - `Spicy Beef Suya`, `Peppered Goat Meat (Asun)`
-  - `Golden Nigerian Puff-Puff`, `Crunchy Nigerian Chin Chin`, `Classic Beef Meat Pie`
+- **Coded `NIGERIAN_LOCAL_DISHES` Array**: Defined 16 normalized recipes with atomic ingredients, explicit step timings, heat levels, and professional chef techniques:
+  - `Authentic Nigerian Egusi Soup` (Frying egusi balls 8-10 mins, stock simmer 15 mins)
+  - `Traditional Igbo Oha Soup (Ofe Oha)` (Boiling/pounding cocoyam paste 25 mins, hand-shredding Oha leaves)
+  - `Traditional Nigerian Ogbono Draw Soup (Ofe Ogbono)` (Dissolving ogbono in warm palm oil, 15 min draw simmer uncovered)
+  - `Authentic Nigerian Fresh Okra Soup (Ofe Okwuru)` (Fresh chopped okra, 5 min medium-low simmer uncovered)
+  - `Pounded Yam (Iyan)` (Boiling white puna yam 20-25 mins, mortar pounding, adding hot yam water)
+  - `Smoky Nigerian Party Jollof Rice` (Tatashe pepper base, foil seal, 35 min steam & charred smoke finish)
+  - `Special Ofada Rice & Ayamase Stew` (Bleaching palm oil 12-15 mins safely, sautéing iru, coarse green pepper fry)
+  - `Spicy Beef Suya`, `Peppered Goat Meat (Asun)` (Grilling ribbons 12-15 mins, roasting goat meat 20 mins)
+  - `Corn Moi Moi`, `Beans Moi Moi` (Banana leaf wrapping, 45-50 min steam setting)
+  - `Golden Puff-Puff`, `Crunchy Chin Chin`, `Classic Beef Meat Pie` (Proofing 50 mins, dough rolling, butter rubbing, shortcrust baking)
+  - `International Cuisines`: Added seed recipes for **Classic Italian Spaghetti Carbonara**, **Japanese Chicken Teriyaki Rice Bowl**, and **Authentic Mexican Beef Tacos**.
 - **Coded `searchAllRecipeAPIs(query)`**: Asynchronous aggregator running concurrent requests across TheMealDB, Spoonacular, Edamam, DummyJSON, and local dishes via `Promise.allSettled()`.
-- **Coded `getUnifiedRecipeById(source, id)`**: Unified detail fetcher supporting local, Edamam, Spoonacular, and TheMealDB IDs.
 
 ---
 
 ### 2. `app/recipe/[source]/[id]/cook/CookingClientView.tsx` (Fullscreen Cooking Assistant)
-- **Coded Full-Screen Immersive Layout**: Applied `fixed inset-0 z-[100] bg-[#1F1D1B]` overlay that hides mobile bottom tab bar conflicts.
-- **Coded Robust Timer `useEffect`**: Refactored dependency array to `[isTimerRunning]` ONLY, enabling smooth, continuous `5:00` ➔ `0:00` countdowns without interval tearing.
-- **Coded Instant Touch Event Handlers**:
-  - `handleNextStep()`: Advances step, resets timer to 300s, and scrolls `#cook-scroll-container` to top (`scrollTop = 0`).
-  - `handlePrevStep()`: Returns to previous step.
-  - `handleToggleTimer()`: Toggles timer start/pause state.
-  - `handleResetTimer()`: Resets timer to 300s.
-- **Coded `z-[110]` Fixed Action Controls Bar**: Placed controls inside `fixed bottom-0 left-0 right-0 z-[110]` for 100% clickability on all mobile and tablet screen heights.
+- **Coded Full-Screen Immersive Layout**: Applied `fixed inset-0 z-[100] bg-[#1F1D1B]` overlay hiding mobile bottom tab bar conflicts.
+- **Coded Robust Timer `useEffect`**: Refactored dependency array to `[isTimerRunning]` ONLY, enabling smooth countdowns without interval tearing.
+- **Coded 0ms Instant Touch Controls**: Handled `Next Step`, `Previous Step`, `Start/Pause Timer`, and `Reset Timer` with zero tap delay.
 
 ---
 
 ### 3. `app/(tabs)/profile/page.tsx` (Executive Profile Hub)
 - **Coded Hero Chef Banner Card**: Dark glassmorphism header card with gradient avatar frame, verified chef badge, and interactive `handleShare()` clipboard function.
-- **Coded 4 Culinary Stats Cards**:
-  - `14 Recipes Cooked` (with Flame icon & `+3 this week`)
-  - `12 Favorite Dishes` (with Heart icon)
-  - `4 Custom Authored Recipes` (with Chef Hat icon)
-  - `7 Days Cooking Streak` (with Active Trophy icon)
-- **Coded Dietary & Spice Badges**: Rendered Lucide vector icons (`<Utensils />`) for `🌶️ Extra Spicy`, `🍽️ Nigerian Traditional`, `💪 High Protein`, and `🥑 Low Carb`.
+- **Coded 4 Culinary Stats Cards**: *14 Recipes Cooked*, *12 Favorite Dishes*, *4 Custom Authored Recipes*, *7 Days Cooking Streak*.
 - **Coded Full-Width Sign Out Action Button**: Styled prominent rose action button (`bg-rose-50 hover:bg-rose-600 hover:text-white py-4 rounded-2xl`).
 
 ---
 
 ### 4. `app/(tabs)/profile/planner/page.tsx` (Interactive Meal Planner)
 - **Coded Interactive State Machine (`plannedMeals`)**: Managed day-by-day weekly menu schedule (Mon–Sun).
-- **Coded `+ Add Meal` Recipe Picker Modal**:
-  - `openAddMealModal(day)`: Opens modal for specific day slot.
-  - Radio toggle for meal slot: **Breakfast**, **Lunch**, **Dinner**, **Snack**.
-  - Search input filtering recipes in real time.
-  - `handleSelectRecipe(recipe)`: Adds selected dish card to active day.
-  - `handleRemoveMeal(id)`: Removes meal card from schedule.
+- **Coded `+ Add Meal` Recipe Picker Modal**: Modal with meal slot selection (**Breakfast**, **Lunch**, **Dinner**, **Snack**), real-time recipe search, and slot scheduling.
 
 ---
 
 ### 5. `app/(tabs)/profile/shopping-list/page.tsx` (Smart Shopping List)
-- **Coded `REAL_NIGERIAN_INGREDIENTS` Array**: Populated shopping list with authentic ingredients (*Ground Egusi, Palm Oil, Oha Leaves, Stockfish, Yam, Parboiled Rice, Tatashe, Suya Yaji, Sirloin Steak*).
+- **Coded Atomic Ingredients Array**: Populated shopping list with single, atomic ingredients (*Ground Egusi, Palm Oil, Oha Leaves, Stockfish, Yam, Parboiled Rice, Tatashe, Suya Yaji, Sirloin Steak*).
 - **Coded Custom Ingredient Input Form (`handleAddItem`)**: Allows adding extra items with custom quantities.
 - **Coded Category Filter Chips**: Filter by **All**, **Soups & Swallows**, **Rice & Stews**, **Grills & Snacks**, or **General Pantry**.
-- **Coded `clearChecked()` & `resetDefaultList()`**: Bulk clear completed items or restore default recipe ingredients.
 
 ---
 
-### 6. `app/recipe/[source]/[id]/RecipeClientView.tsx` (Responsive Recipe Detail View)
-- **Coded 3-Column Split Grid**: `grid-cols-1 lg:grid-cols-3` layout placing Ingredients in Column 1 and Step Directions in Columns 2 & 3 on desktop/laptop displays.
-- **Coded Interactive Checklist (`toggleIngredient`)**: Toggles item checkmark with strikethrough styling.
-- **Coded Servings Multiplier (`setServingsMultiplier`)**: Toggles 1x, 2x, and 3x portion scaling.
-
----
-
-### 7. `app/layout.tsx` (Root Layout Touch Fix)
-- **Fixed Mobile Touch-Blocking Bug**: Removed `select-none` from `<body>` element which was causing WebKit on iOS Safari & Android Chrome to suppress touch click events.
-
----
-
-### 8. Git & Vercel Deployment
-- **Git Version Control**: Initialized repository, set user configuration, and committed all 78 files across 7 commits.
+### 6. Git & Vercel Deployment
 - **GitHub Repository**: Pushed code to [https://github.com/nduchecp/cookdish](https://github.com/nduchecp/cookdish).
-- **Vercel Production Deployment**: Deployed live to Vercel with 100% uptime and instant performance.
+- **Vercel Production Deployment**: Deployed live on Vercel with 100% uptime and instant performance.
