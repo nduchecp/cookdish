@@ -10,17 +10,17 @@ import {
   ChevronRight,
   LogOut,
   Heart,
-  Bookmark,
   ChefHat,
   Award,
   Flame,
   Sparkles,
   Share2,
-  Edit3,
   Sliders,
   ShieldCheck,
   Check,
-  Utensils
+  Utensils,
+  Smartphone,
+  Download
 } from "lucide-react";
 
 export default function ProfilePage() {
@@ -32,6 +32,15 @@ export default function ProfilePage() {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
+  };
+
+  const handleManualPwaInstall = () => {
+    alert(
+      "To install CookDish App on your device:\n\n" +
+      "• iPhone / iPad (Safari):\n  Tap Share icon (bottom bar) ➔ 'Add to Home Screen'\n\n" +
+      "• Android (Chrome / Edge):\n  Tap 3 dots menu (top right) ➔ 'Install App' or 'Add to Home Screen'\n\n" +
+      "• Desktop (Chrome / Edge):\n  Click the Install icon in the browser address bar!"
+    );
   };
 
   return (
@@ -49,6 +58,34 @@ export default function ProfilePage() {
         >
           {copied ? <Check className="w-4 h-4 text-emerald-600" /> : <Share2 className="w-4 h-4 text-[#E8734A]" />}
           <span>{copied ? "Link Copied!" : "Share Profile"}</span>
+        </button>
+      </div>
+
+      {/* PWA App Install Callout Banner */}
+      <div className="bg-[#1F1D1B] text-white rounded-3xl p-5 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
+        <div className="flex items-center gap-3.5 text-center sm:text-left">
+          <div className="w-12 h-12 rounded-2xl bg-[#E8734A] text-white flex items-center justify-center shrink-0 shadow-sm">
+            <Smartphone className="w-6 h-6" />
+          </div>
+          <div>
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E8734A] block">
+              Official PWA Mobile App
+            </span>
+            <h4 className="text-base font-extrabold text-white">
+              Install CookDish App
+            </h4>
+            <p className="text-xs text-white/80">
+              Add to home screen for 1-tap launch & offline cooking
+            </p>
+          </div>
+        </div>
+        <button
+          type="button"
+          onClick={handleManualPwaInstall}
+          className="w-full sm:w-auto bg-[#E8734A] hover:bg-[#D66239] text-white text-xs font-extrabold px-5 py-3 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95 cursor-pointer shrink-0"
+        >
+          <Download className="w-4 h-4" />
+          <span>Install App</span>
         </button>
       </div>
 
@@ -282,7 +319,7 @@ export default function ProfilePage() {
         </button>
 
         <p className="text-xs text-[#6E6B68]">
-          CookDish App v2.5.0 • Live Vercel Release
+          CookDish PWA v2.5.0 • Live Vercel Release
         </p>
       </div>
     </div>
