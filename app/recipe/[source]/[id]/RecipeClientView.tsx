@@ -27,6 +27,14 @@ export function parseStepText(step: string) {
   };
 }
 
+export function formatMinutes(mins: number) {
+  if (!mins || isNaN(mins)) return "30 mins";
+  if (mins < 60) return `${mins} mins`;
+  const hours = Math.floor(mins / 60);
+  const remaining = mins % 60;
+  return remaining > 0 ? `${hours}h ${remaining}m` : `${hours}h`;
+}
+
 export default function RecipeClientView({ recipe, source, id }: RecipeClientViewProps) {
   const [checkedIngredients, setCheckedIngredients] = useState<number[]>([]);
   const [servingsMultiplier, setServingsMultiplier] = useState<number>(1);
@@ -37,6 +45,8 @@ export default function RecipeClientView({ recipe, source, id }: RecipeClientVie
       prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
     );
   };
+
+  const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes;
 
   return (
     <div className="min-h-screen bg-[#FDF6EF] pb-28 sm:pb-12 w-full">
@@ -91,9 +101,11 @@ export default function RecipeClientView({ recipe, source, id }: RecipeClientVie
             <div className="flex items-center gap-2.5">
               <Clock className="w-5 h-5 text-[#E8734A]" />
               <div>
-                <span className="block text-[10px] font-extrabold uppercase text-[#6E6B68]">Total Time</span>
+                <span className="block text-[10px] font-extrabold uppercase text-[#6E6B68]">
+                  Prep {recipe.prepTimeMinutes}m • Cook {recipe.cookTimeMinutes}m
+                </span>
                 <span className="font-bold text-[#1F1D1B]">
-                  {recipe.prepTimeMinutes + recipe.cookTimeMinutes} mins
+                  {formatMinutes(totalTime)} Total
                 </span>
               </div>
             </div>
