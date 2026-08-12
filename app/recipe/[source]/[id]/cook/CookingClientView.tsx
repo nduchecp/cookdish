@@ -11,6 +11,22 @@ interface CookingClientViewProps {
   id: string;
 }
 
+export function parseStepText(step: string) {
+  const match = step.match(/^([^(]+)(?:\(([^)]+)\))?:\s*(.*)$/);
+  if (match) {
+    return {
+      title: match[1].trim(),
+      time: match[2] ? match[2].trim() : null,
+      body: match[3].trim(),
+    };
+  }
+  return {
+    title: null,
+    time: null,
+    body: step,
+  };
+}
+
 export default function CookingClientView({ recipe, source, id }: CookingClientViewProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [timerSeconds, setTimerSeconds] = useState(300); // 5 mins step timer
@@ -28,6 +44,7 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
 
   const totalSteps = steps.length;
   const currentInstruction = steps[currentStep];
+  const parsedStep = parseStepText(currentInstruction);
 
   // Guaranteed React Timer Countdown Effect (Dependency: isTimerRunning ONLY)
   useEffect(() => {
@@ -162,11 +179,25 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
           </div>
         </div>
 
-        {/* Step Card Text */}
+        {/* Step Card Text with Separated Title & Time Header */}
         <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5 backdrop-blur-md flex-1 flex flex-col justify-between">
-          <p className="text-lg sm:text-2xl font-bold leading-relaxed text-white">
-            {currentInstruction}
-          </p>
+          <div className="space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#E8734A]">
+                {parsedStep.title || `Step ${currentStep + 1}`}
+              </h3>
+              {parsedStep.time && (
+                <span className="inline-flex items-center gap-1.5 bg-[#E8734A]/20 border border-[#E8734A]/40 text-[#E8734A] text-xs font-bold px-3.5 py-1.5 rounded-full">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>{parsedStep.time}</span>
+                </span>
+              )}
+            </div>
+
+            <p className="text-base sm:text-xl font-medium leading-relaxed text-white/95">
+              {parsedStep.body}
+            </p>
+          </div>
 
           {/* Chef Tip Callout */}
           <div className="flex items-start gap-3 bg-[#E8734A]/10 border border-[#E8734A]/30 p-4 rounded-2xl">
@@ -206,7 +237,7 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
         </div>
       </div>
 
-      {/* Fixed Bottom Action Controls (Z-110 Guaranteed Always Visible & Clickable) */}
+      {/* Fixed Bottom Action Controls */}
       <div className="fixed bottom-0 left-0 right-0 w-full bg-[#1F1D1B] border-t border-white/10 p-4 sm:p-5 z-[110] shadow-2xl">
         <div className="max-w-3xl mx-auto flex justify-between items-center gap-4">
           <button

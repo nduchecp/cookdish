@@ -11,6 +11,22 @@ interface RecipeClientViewProps {
   id: string;
 }
 
+export function parseStepText(step: string) {
+  const match = step.match(/^([^(]+)(?:\(([^)]+)\))?:\s*(.*)$/);
+  if (match) {
+    return {
+      title: match[1].trim(),
+      time: match[2] ? match[2].trim() : null,
+      body: match[3].trim(),
+    };
+  }
+  return {
+    title: null,
+    time: null,
+    body: step,
+  };
+}
+
 export default function RecipeClientView({ recipe, source, id }: RecipeClientViewProps) {
   const [checkedIngredients, setCheckedIngredients] = useState<number[]>([]);
   const [servingsMultiplier, setServingsMultiplier] = useState<number>(1);
@@ -47,7 +63,7 @@ export default function RecipeClientView({ recipe, source, id }: RecipeClientVie
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
-        {/* Hero Banner (Fully Responsive Across Mobile, Tablet, Laptop, Desktop) */}
+        {/* Hero Banner */}
         <div className="relative h-64 sm:h-80 lg:h-96 w-full rounded-3xl overflow-hidden border border-[#EFE6DD] shadow-sm bg-[#F3EAE1]">
           <img
             src={recipe.image}
@@ -120,9 +136,9 @@ export default function RecipeClientView({ recipe, source, id }: RecipeClientVie
           </div>
         </div>
 
-        {/* Responsive Grid Layout (1 col on mobile, 3 cols on laptop & desktop) */}
+        {/* Responsive Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 items-start">
-          {/* Column 1: Ingredients Checklist (1 col on desktop) */}
+          {/* Column 1: Ingredients Checklist */}
           <div className="bg-white rounded-3xl p-6 border border-[#EFE6DD] space-y-4 shadow-xs lg:col-span-1">
             <div className="flex justify-between items-center border-b border-[#EFE6DD] pb-3">
               <h2 className="text-lg font-extrabold text-[#1F1D1B]">
@@ -169,20 +185,42 @@ export default function RecipeClientView({ recipe, source, id }: RecipeClientVie
             )}
           </div>
 
-          {/* Column 2: Preparation Directions (2 cols on desktop) */}
+          {/* Column 2: Preparation Directions */}
           <div className="bg-white rounded-3xl p-6 border border-[#EFE6DD] space-y-4 shadow-xs lg:col-span-2">
             <h2 className="text-lg font-extrabold text-[#1F1D1B] border-b border-[#EFE6DD] pb-3">
               Step-by-Step Directions
             </h2>
-            <div className="space-y-3">
-              {recipe.instructions.map((step, idx) => (
-                <div key={idx} className="flex gap-3.5 p-4 rounded-2xl bg-[#FDF6EF] border border-[#EFE6DD]">
-                  <span className="font-extrabold text-[#E8734A] text-xs bg-white w-7 h-7 rounded-full flex items-center justify-center border border-[#EFE6DD] shrink-0 shadow-xs">
-                    {idx + 1}
-                  </span>
-                  <p className="text-[#1F1D1B] text-xs sm:text-sm font-medium leading-relaxed">{step}</p>
-                </div>
-              ))}
+            <div className="space-y-4">
+              {recipe.instructions.map((step, idx) => {
+                const parsed = parseStepText(step);
+                return (
+                  <div key={idx} className="p-4 sm:p-5 rounded-2xl bg-[#FDF6EF] border border-[#EFE6DD] space-y-2.5 shadow-2xs">
+                    {/* Header Row: Step Badge + Title + Time Pill */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#EFE6DD] pb-2.5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="font-extrabold text-[#E8734A] text-xs bg-white w-7 h-7 rounded-full flex items-center justify-center border border-[#EFE6DD] shrink-0 shadow-xs">
+                          {idx + 1}
+                        </span>
+                        <h4 className="font-extrabold text-[#1F1D1B] text-sm sm:text-base">
+                          {parsed.title || `Step ${idx + 1}`}
+                        </h4>
+                      </div>
+
+                      {parsed.time && (
+                        <span className="inline-flex items-center gap-1.5 bg-orange-100/90 border border-orange-200 text-[#E8734A] text-xs font-bold px-3 py-1 rounded-full shadow-2xs">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>{parsed.time}</span>
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Body Row: Instruction Paragraph */}
+                    <p className="text-[#1F1D1B] text-xs sm:text-sm font-medium leading-relaxed pt-0.5">
+                      {parsed.body}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
