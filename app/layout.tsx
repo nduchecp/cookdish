@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import SWRegister from "@/components/SWRegister";
+import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 
 const jakarta = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
@@ -11,11 +13,18 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "CookDish — Cook with Simple Ingredients",
   description: "Discover, save, plan, and cook 50+ authentic Nigerian & global recipes.",
-  manifest: "/manifest.webmanifest",
+  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "CookDish",
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  icons: {
+    icon: "/icon-192.png",
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -35,7 +44,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${jakarta.variable} antialiased`}>
       <body className="bg-[var(--background)] text-[var(--foreground)] min-h-screen font-sans">
+        <SWRegister />
         {children}
+        <PWAInstallPrompt />
       </body>
     </html>
   );
