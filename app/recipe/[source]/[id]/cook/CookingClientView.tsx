@@ -340,10 +340,6 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
         </div>
 
         <div className="space-y-3 max-w-md z-10">
-          <span className="inline-flex items-center gap-1.5 bg-orange-100 border border-orange-200 text-[#E8734A] text-xs font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-2xs">
-            <Sparkles className="w-4 h-4" />
-            <span>Meal Completed!</span>
-          </span>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1F1D1B] tracking-tight">
             {recipe.title}
           </h1>
