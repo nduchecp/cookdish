@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Soup, Utensils, Flame, Cookie, Layers } from "lucide-react";
+import { Soup, Utensils, Flame, Cookie, Globe } from "lucide-react";
 import { getTheMealDBCategories, MealDBCategory } from "@/lib/api/themealdb";
 
 export default function CategoriesPage() {
@@ -29,7 +29,7 @@ export default function CategoriesPage() {
           Recipe Categories
         </h1>
         <p className="text-[#6E6B68] text-sm font-medium">
-          Explore by traditional Nigerian soups, rice & stews, grills, snacks, or global course
+          Explore by traditional Nigerian soups, rice & stews, grills, snacks, or global international cuisines
         </p>
       </div>
 
@@ -97,6 +97,22 @@ export default function CategoriesPage() {
             </p>
           </div>
           <Cookie className="w-8 h-8 text-white/85 group-hover:text-white group-hover:scale-110 transition-all shrink-0 ml-3 z-10" />
+        </Link>
+
+        {/* 5. International Cuisines */}
+        <Link
+          href="/categories/international"
+          className="relative bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#1D4ED8] text-white rounded-3xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-all flex items-center justify-between group overflow-hidden sm:col-span-2"
+        >
+          <div className="space-y-1 max-w-[80%] z-10">
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug">
+              International Cuisines
+            </h2>
+            <p className="text-xs text-white/85 font-medium leading-normal line-clamp-1">
+              Italian Carbonara, Japanese Teriyaki Rice Bowls, Mexican Beef Tacos & Global Classics
+            </p>
+          </div>
+          <Globe className="w-8 h-8 text-white/85 group-hover:text-white group-hover:scale-110 transition-all shrink-0 ml-3 z-10" />
         </Link>
       </div>
 

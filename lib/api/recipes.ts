@@ -437,6 +437,96 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     difficulty: "Medium",
     rating: 5.0,
     reviewsCount: 480,
+  },
+
+  // 5. INTERNATIONAL CUISINES (Global Classics)
+  {
+    id: "int-spaghetti-carbonara",
+    source: "user",
+    title: "Classic Italian Spaghetti Carbonara",
+    description: "Traditional Roman pasta with crispy guanciale, creamy egg yolks, freshly grated Pecorino Romano cheese, and black pepper.",
+    image: "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=800&q=80",
+    category: "International",
+    area: "Italian",
+    instructions: [
+      "Boil spaghetti in salted water until al dente.",
+      "Crisp diced guanciale or pancetta in a pan over medium heat until golden.",
+      "Whisk egg yolks, Pecorino Romano, and black pepper together in a bowl.",
+      "Toss hot drained pasta with pancetta and remove from heat.",
+      "Quickly pour egg mixture into pasta, tossing vigorously with pasta water to create a creamy sauce."
+    ],
+    ingredients: [
+      { name: "Spaghetti Pasta", amount: "400g" },
+      { name: "Pancetta / Guanciale", amount: "150g" },
+      { name: "Egg Yolks", amount: "4" },
+      { name: "Pecorino Romano Cheese", amount: "1/2 cup" },
+      { name: "Freshly Cracked Black Pepper", amount: "1 tsp" }
+    ],
+    prepTimeMinutes: 10,
+    cookTimeMinutes: 15,
+    servings: 4,
+    difficulty: "Easy",
+    rating: 4.9,
+    reviewsCount: 410,
+  },
+  {
+    id: "int-chicken-teriyaki",
+    source: "user",
+    title: "Japanese Chicken Teriyaki Rice Bowl",
+    description: "Tender chicken thighs glazed in sweet soy mirin teriyaki sauce, served over fluffy steamed rice with sesame seeds.",
+    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
+    category: "International",
+    area: "Japanese",
+    instructions: [
+      "Pan-sear boneless chicken thighs skin-side down until golden crisp.",
+      "Whisk soy sauce, mirin, sake, and brown sugar into a glaze.",
+      "Pour glaze over chicken and simmer until sauce thickens to a rich syrup.",
+      "Slice chicken and serve over warm steamed rice, garnished with sesame seeds and spring onions."
+    ],
+    ingredients: [
+      { name: "Chicken Thighs (Boneless)", amount: "500g" },
+      { name: "Soy Sauce", amount: "3 tbsp" },
+      { name: "Mirin Rice Wine", amount: "2 tbsp" },
+      { name: "Brown Sugar", amount: "1 tbsp" },
+      { name: "Steamed Jasmine Rice", amount: "3 cups" },
+      { name: "Sesame Seeds", amount: "1 tbsp" },
+      { name: "Spring Onions", amount: "2 stalks" }
+    ],
+    prepTimeMinutes: 15,
+    cookTimeMinutes: 15,
+    servings: 3,
+    difficulty: "Easy",
+    rating: 4.8,
+    reviewsCount: 350,
+  },
+  {
+    id: "int-beef-tacos",
+    source: "user",
+    title: "Authentic Mexican Street Beef Tacos",
+    description: "Seasoned ground beef tucked into warm corn tortillas with shredded cheese, fresh pico de gallo salsa, and lime.",
+    image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=800&q=80",
+    category: "International",
+    area: "Mexican",
+    instructions: [
+      "Brown ground beef in a skillet over medium heat and drain excess fat.",
+      "Stir in taco seasoning and water; simmer for 5 minutes until rich and thick.",
+      "Warm corn tortilla shells on a dry skillet for 30 seconds per side.",
+      "Fill tortillas with seasoned beef, topped with cheddar, pico de gallo, and sour cream."
+    ],
+    ingredients: [
+      { name: "Ground Beef Sirloin", amount: "500g" },
+      { name: "Taco Seasoning Mix", amount: "2 tbsp" },
+      { name: "Corn Tortilla Shells", amount: "8" },
+      { name: "Shredded Cheddar Cheese", amount: "1 cup" },
+      { name: "Fresh Pico de Gallo Salsa", amount: "1/2 cup" },
+      { name: "Sour Cream", amount: "1/4 cup" }
+    ],
+    prepTimeMinutes: 15,
+    cookTimeMinutes: 15,
+    servings: 4,
+    difficulty: "Easy",
+    rating: 5.0,
+    reviewsCount: 520,
   }
 ];
 

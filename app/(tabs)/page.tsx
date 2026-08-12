@@ -13,6 +13,7 @@ import {
   Soup,
   Utensils,
   Cookie,
+  Globe,
   Layers,
 } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -25,6 +26,7 @@ const FILTER_TABS = [
   { name: "Rice & Stews", filter: "Rice & Stews", icon: Utensils },
   { name: "Grills & Suya", filter: "Grills & Chops", icon: Flame },
   { name: "Bakery & Snacks", filter: "Snacks", icon: Cookie },
+  { name: "International", filter: "International", icon: Globe },
 ];
 
 export default function HomeFeed() {
@@ -108,12 +110,17 @@ export default function HomeFeed() {
       r.title.toLowerCase().includes("ewa")
   );
 
+  const internationalRecipes = allRecipes.filter(
+    (r) => r.category === "International" || (r.source !== "user" && r.area !== "Nigerian")
+  );
+
   // Return active filtered recipes list
   const getActiveRecipes = () => {
     if (activeFilter === "Soups") return traditionalSoups.length > 0 ? traditionalSoups : allRecipes;
     if (activeFilter === "Rice & Stews") return riceDishes.length > 0 ? riceDishes : allRecipes;
     if (activeFilter === "Grills & Chops") return grillsAndChops.length > 0 ? grillsAndChops : allRecipes;
     if (activeFilter === "Snacks") return snacksAndBakery.length > 0 ? snacksAndBakery : allRecipes;
+    if (activeFilter === "International") return internationalRecipes.length > 0 ? internationalRecipes : allRecipes;
     return allRecipes;
   };
 
@@ -143,7 +150,7 @@ export default function HomeFeed() {
             autoCorrect="off"
             value={homeQuery}
             onChange={(e) => setHomeQuery(e.target.value)}
-            placeholder="Search Oha, Egusi, Jollof, Suya, Moi Moi..."
+            placeholder="Search Oha, Egusi, Jollof, Suya, Carbonara, Tacos..."
             className="w-full bg-white border border-[#EFE6DD] rounded-2xl pl-12 pr-4 py-3.5 text-[#1F1D1B] placeholder-[#6E6B68] text-sm font-medium focus:outline-none focus:border-[#E8734A] focus:ring-2 focus:ring-[#E8734A]/20 transition-all shadow-xs"
           />
         </div>
