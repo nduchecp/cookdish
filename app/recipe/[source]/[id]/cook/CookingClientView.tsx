@@ -15,6 +15,8 @@ import {
   Volume2,
   VolumeX,
   Bell,
+  Sparkles,
+  Trophy,
 } from "lucide-react";
 import { NormalizedRecipe } from "@/lib/api/themealdb";
 
@@ -118,6 +120,79 @@ export function playAudioChime(type: "completion" | "timerDone" | "victory") {
   } catch (err) {
     console.error("Audio chime playback error:", err);
   }
+}
+
+/**
+ * 60fps HTML5 Canvas Falling Confetti Particle System
+ */
+function ConfettiCanvas() {
+  useEffect(() => {
+    const canvas = document.getElementById("confetti-canvas") as HTMLCanvasElement;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    const colors = ["#E8734A", "#F59E0B", "#10B981", "#3B82F6", "#8B5CF6", "#EC4899", "#F43F5E"];
+
+    const particles = Array.from({ length: 140 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height - height,
+      size: Math.random() * 9 + 5,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      speedY: Math.random() * 3.5 + 2.5,
+      speedX: Math.random() * 2.5 - 1.25,
+      rotation: Math.random() * 360,
+      rotationSpeed: Math.random() * 6 - 3,
+    }));
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach((p) => {
+        p.y += p.speedY;
+        p.x += p.speedX;
+        p.rotation += p.rotationSpeed;
+
+        if (p.y > height) {
+          p.y = -20;
+          p.x = Math.random() * width;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rotation * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 1.4);
+        ctx.restore();
+      });
+
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    render();
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  return (
+    <canvas
+      id="confetti-canvas"
+      className="fixed inset-0 pointer-events-none z-[130] w-full h-full"
+    />
+  );
 }
 
 export default function CookingClientView({ recipe, source, id }: CookingClientViewProps) {
@@ -225,12 +300,12 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
 
   const handleNextStep = () => {
     if (currentStep < totalSteps - 1) {
-      playAudioChime("completion"); // Play audio chime sound per completed instruction!
+      playAudioChime("completion");
       setCurrentStep((prev) => prev + 1);
       const mainContainer = document.getElementById("cook-scroll-container");
       if (mainContainer) mainContainer.scrollTop = 0;
     } else {
-      playAudioChime("victory"); // Play victory fanfare chime on final step!
+      playAudioChime("victory");
       setIsFinished(true);
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
@@ -257,27 +332,36 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
 
   if (isFinished) {
     return (
-      <div className="fixed inset-0 z-[120] bg-[#1F1D1B] text-white flex flex-col items-center justify-center p-6 text-center space-y-6">
-        <div className="w-20 h-20 rounded-full bg-[#E8734A] text-white flex items-center justify-center shadow-lg animate-bounce">
-          <CheckCircle className="w-10 h-10" />
+      <div className="fixed inset-0 z-[120] bg-[#FDF6EF] text-[#1F1D1B] flex flex-col items-center justify-center p-6 text-center space-y-6">
+        <ConfettiCanvas />
+
+        <div className="w-24 h-24 rounded-full bg-[#E8734A] text-white flex items-center justify-center shadow-xl animate-bounce z-10">
+          <Trophy className="w-12 h-12" />
         </div>
-        <div className="space-y-2 max-w-md">
-          <span className="text-xs font-bold uppercase tracking-widest text-[#E8734A]">Meal Completed!</span>
-          <h1 className="text-3xl font-extrabold">{recipe.title}</h1>
-          <p className="text-sm text-white/80">
-            Great job, Chef! Your dish is cooked and ready to enjoy.
+
+        <div className="space-y-3 max-w-md z-10">
+          <span className="inline-flex items-center gap-1.5 bg-orange-100 border border-orange-200 text-[#E8734A] text-xs font-extrabold px-4 py-1.5 rounded-full uppercase tracking-widest shadow-2xs">
+            <Sparkles className="w-4 h-4" />
+            <span>Meal Completed!</span>
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#1F1D1B] tracking-tight">
+            {recipe.title}
+          </h1>
+          <p className="text-sm font-medium text-[#6E6B68]">
+            Great job, Chef! Your dish is cooked to perfection and ready to serve.
           </p>
         </div>
-        <div className="flex gap-4 pt-4">
+
+        <div className="flex flex-wrap gap-4 pt-4 z-10">
           <Link
             href={`/recipe/${source}/${id}`}
-            className="bg-white/10 hover:bg-white/20 text-white px-6 py-3.5 rounded-2xl font-bold transition-all border border-white/20 touch-manipulation"
+            className="bg-white hover:bg-[#FDF6EF] text-[#1F1D1B] px-6 py-3.5 rounded-2xl font-bold transition-all border border-[#EFE6DD] shadow-2xs active:scale-95 touch-manipulation"
           >
             Back to Recipe
           </Link>
           <Link
             href="/"
-            className="bg-[#E8734A] hover:bg-[#D66239] text-white px-6 py-3.5 rounded-2xl font-bold transition-all shadow-md touch-manipulation"
+            className="bg-[#E8734A] hover:bg-[#D66239] text-white px-6 py-3.5 rounded-2xl font-bold transition-all shadow-md active:scale-95 touch-manipulation"
           >
             Home Feed
           </Link>
