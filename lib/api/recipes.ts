@@ -3,7 +3,7 @@ import { searchSpoonacular, getSpoonacularRecipeById, FALLBACK_JOLLOF_RECIPES } 
 import { searchEdamam, getEdamamRecipeById } from "./edamam";
 
 export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
-  // 1. SOUPS & SWALLOWS (Accurate Cultural Origins & Distinct Soups)
+  // 1. SOUPS & SWALLOWS (Accurate Cultural Origins & Detailed Culinary Methods)
   {
     id: "ng-egusi-soup",
     source: "user",
@@ -13,16 +13,17 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Soups",
     area: "Nigerian",
     instructions: [
-      "Blend ground egusi seeds with onion and small warm water into a thick paste.",
-      "Heat red palm oil in a pot, add sliced onions, and gently fry egusi balls until golden and fragrant.",
-      "Pour in rich beef broth, ground crayfish, smoked catfish, stockfish, and ground pepper. Simmer for 20 minutes.",
-      "Stir in chopped spinach or ugu leaves and washed bitterleaf.",
-      "Simmer for 5 minutes until vegetables are tender. Serve hot with Pounded Yam or Eba."
+      "Prep Meat & Stock (20 mins): Place 500g seasoned beef, stockfish, and 1 chopped onion in a pot. Add 3 cups of water, 2 seasoning cubes, and 1 tsp salt. Boil over medium-high heat for 20 minutes until meat is fork-tender. Separate meat and reserve rich broth.",
+      "Form Egusi Paste (5 mins): In a bowl, mix 2 cups of ground egusi seeds with 1 finely diced onion and 4 tbsp of warm water until a smooth, thick paste forms. Set aside.",
+      "Fry Egusi Balls (8-10 mins): Heat 1/2 cup of red palm oil in a heavy-bottomed pot over medium heat for 3 minutes. Scoop small spoonfuls of egusi paste into the warm oil. Fry gently without stirring for 5 minutes to form firm balls, then turn gently and fry for another 4 minutes until golden and fragrant.",
+      "Simmer Broth & Fish (15 mins): Pour reserved beef stock into the pot. Add cooked beef, 1 cup smoked catfish, 3 tbsp ground crayfish, and 2 crushed scotch bonnet peppers. Reduce heat to medium-low, cover, and simmer for 15 minutes to allow egusi to absorb rich flavors.",
+      "Add Greens & Serve (5 mins): Stir in 3 cups chopped fresh spinach (or ugu leaves) and 1/2 cup washed bitterleaf. Simmer uncovered for 5 minutes until greens are tender and vibrant. Serve steaming hot with smooth Pounded Yam or Eba."
     ],
     ingredients: [
       { name: "Ground Egusi (Melon Seeds)", amount: "2 cups" },
       { name: "Red Palm Oil", amount: "1/2 cup" },
       { name: "Chopped Spinach / Ugu Leaves", amount: "3 cups" },
+      { name: "Washed Bitterleaf", amount: "1/2 cup" },
       { name: "Smoked Catfish", amount: "1 cup" },
       { name: "Stockfish", amount: "1 cup" },
       { name: "Seasoned Beef", amount: "500g" },
@@ -31,7 +32,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Scotch Bonnet Peppers (Rodo)", amount: "2" }
     ],
     prepTimeMinutes: 20,
-    cookTimeMinutes: 35,
+    cookTimeMinutes: 45,
     servings: 6,
     difficulty: "Medium",
     rating: 5.0,
@@ -46,11 +47,11 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Soups",
     area: "Nigerian",
     instructions: [
-      "Boil cocoyam tubers until soft, peel, and pound into a smooth thickener paste.",
-      "Boil beef, shaki, stockfish, and smoked fish with onions, seasoning cubes, and salt until tender.",
-      "Stir red palm oil, ground crayfish, yellow pepper, and ogiri into the meat broth.",
-      "Add scoops of cocoyam paste and allow to dissolve completely to thicken the soup.",
-      "Shred fresh Oha leaves by hand (do not cut with knife) and add to the pot. Simmer for 3 minutes and serve with Pounded Yam."
+      "Boil & Pound Cocoyam (25 mins): Wash 8 medium cocoyam tubers thoroughly. Boil in a covered pot with water over high heat for 20 minutes until tender when pierced with a fork. Peel off skins while hot and pound in a mortar (or food processor) until smooth and elastic. Set paste aside.",
+      "Season & Cook Protein Stock (20 mins): In a large pot, combine 500g beef, 200g shaki (cow tripe), 1 cup stockfish, and 1 cup smoked catfish with 1 sliced onion, 2 seasoning cubes, and 4 cups water. Boil on medium-high heat for 20 minutes.",
+      "Flavor Broth (8 mins): Add 1/2 cup red palm oil, 3 tbsp ground crayfish, 2 blended yellow habanero peppers, and 1 tsp ogiri Igbo (fermented castor seed paste). Stir well and boil for 8 minutes until oil blends seamlessly into broth.",
+      "Dissolve Thickener (10 mins): Add small scoops of prepared cocoyam paste into the bubbling broth. Lower heat to medium and allow scoops to dissolve completely into a silky, thick soup consistency (about 10 minutes).",
+      "Hand-Shred Oha Leaves (3 mins): Tear fresh Oha leaves by hand into medium pieces (do NOT use a metal knife to prevent leaves from turning dark and bitter). Add shredded Oha leaves to pot, stir gently, and simmer for just 3 minutes. Serve hot with Pounded Yam."
     ],
     ingredients: [
       { name: "Fresh Oha Leaves", amount: "2 bunches" },
@@ -63,7 +64,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Ground Crayfish", amount: "3 tbsp" }
     ],
     prepTimeMinutes: 25,
-    cookTimeMinutes: 40,
+    cookTimeMinutes: 45,
     servings: 5,
     difficulty: "Medium",
     rating: 5.0,
@@ -78,11 +79,11 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Soups",
     area: "Nigerian",
     instructions: [
-      "Dissolve finely ground ogbono powder in warm palm oil off the heat.",
-      "Pour rich meat stock into a pot, bring to boil, and stir in dissolved ogbono mixture.",
-      "Whisk constantly on medium-low heat for 15 minutes as it draws and thickens.",
-      "Add smoked catfish, prawns, ground crayfish, scotch bonnet pepper, and seasoning cubes.",
-      "Simmer for 10 minutes without covering pot to maintain draw. Serve with Pounded Yam or Eba."
+      "Prepare Rich Stock (15 mins): Simmer 3 cups of meat stock with 1 cup smoked catfish, 1/2 cup dried prawns, and 2 crushed scotch bonnet peppers over medium heat for 15 minutes until broth is intensely fragrant.",
+      "Dissolve Ogbono (3 mins): In a small bowl, mix 1/2 cup finely ground ogbono powder with 1/3 cup warm red palm oil off heat until completely smooth and lump-free.",
+      "Develop Draw Consistency (15 mins): Pour dissolved ogbono mixture into the simmering meat stock. Immediately turn heat to medium-low and whisk continuously for 15 minutes. The soup will begin to draw and thicken noticeably. DO NOT cover pot during this step to preserve draw quality.",
+      "Season & Simmer (8 mins): Stir in 2 tbsp ground crayfish, 2 seasoning cubes, and 1 tsp salt. Simmer gently for 8 minutes, stirring occasionally from bottom to prevent scorching.",
+      "Finish & Serve (2 mins): Add optional chopped spinach or ugu if desired. Simmer for 2 minutes and serve warm with hot Pounded Yam or Eba."
     ],
     ingredients: [
       { name: "Ground Ogbono Powder", amount: "1/2 cup" },
@@ -95,7 +96,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Salt", amount: "1 tsp" }
     ],
     prepTimeMinutes: 15,
-    cookTimeMinutes: 25,
+    cookTimeMinutes: 30,
     servings: 6,
     difficulty: "Easy",
     rating: 4.9,
@@ -110,11 +111,11 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Soups",
     area: "Nigerian",
     instructions: [
-      "Finely chop fresh green okra pods (or grate half for extra draw).",
-      "Boil beef, cow tripe (shaki), and stockfish in seasoned broth until tender.",
-      "Add red palm oil, ground crayfish, blended scotch bonnets, and smoked fish to the broth.",
-      "Stir in chopped okra and simmer on medium heat for 5 minutes (do not overcook or cover).",
-      "Serve steaming hot alongside Pounded Yam, Eba, or Amala."
+      "Cook Assorted Meats (20 mins): Boil 300g assorted beef, 200g cow tripe (shaki), and 1 cup stockfish with 1 diced onion and seasoning cubes in 3 cups water over medium-high heat for 20 minutes until tender.",
+      "Prep Fresh Okra (10 mins): Wash 400g fresh green okra pods. Dice 3/4 finely into small rounds and grate remaining 1/4 on a box grater for maximum natural viscosity.",
+      "Add Seasonings & Oil (8 mins): Add 1/3 cup red palm oil, 3 tbsp ground crayfish, 2 blended scotch bonnet peppers, and 1 cup smoked catfish to meat stock. Simmer over medium heat for 8 minutes.",
+      "Cook Okra (5 mins): Stir chopped and grated okra into the bubbling soup. Simmer on medium-low heat uncovered for exactly 5 minutes so okra retains vibrant green color and fresh crunch.",
+      "Serve (2 mins): Remove from heat immediately to prevent overcooking. Serve hot with Pounded Yam or Amala."
     ],
     ingredients: [
       { name: "Fresh Green Okra", amount: "400g" },
@@ -127,7 +128,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Scotch Bonnet Peppers (Rodo)", amount: "2" }
     ],
     prepTimeMinutes: 15,
-    cookTimeMinutes: 20,
+    cookTimeMinutes: 25,
     servings: 5,
     difficulty: "Easy",
     rating: 5.0,
@@ -142,18 +143,18 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Swallows",
     area: "Nigerian",
     instructions: [
-      "Peel white puna yam tuber, slice into thick rounded pieces, and wash thoroughly.",
-      "Boil yam slices in water for 20-25 minutes until fork-tender.",
-      "Pound hot cooked yam in a mortar (or food processor) until completely smooth and lump-free.",
-      "Add small splashes of hot yam water if needed to reach desired stretchy softness.",
-      "Serve warm with Egusi, Oha, Ogbono, or Okra soup."
+      "Peel & Slice Yam (10 mins): Peel 1 medium white puna yam tuber (1.5kg), trimming off dark spots. Cut into thick rounded slices and rinse twice in cold water to remove starch.",
+      "Boil Yam Tender (20-25 mins): Place yam slices in a large pot, cover completely with water, and boil over high heat for 20-25 minutes until yam is fork-tender and breaks easily.",
+      "Pound Hot Yam (10 mins): Transfer hot boiled yam slices immediately into a mortar (or heavy-duty food processor). Pound rhythmically with a wooden pestle until chunks dissolve into a cohesive dough.",
+      "Add Hot Water & Stretch (5 mins): Add small 2 tbsp splashes of hot yam boiling water as you pound to achieve a stretchy, soft, velvety swallow texture.",
+      "Mold & Serve (2 mins): Mold hot Pounded Yam into smooth round portions using wet hands. Serve alongside Egusi, Oha, or Ogbono soup."
     ],
     ingredients: [
       { name: "White Puna Yam Tuber", amount: "1 medium tuber (1.5kg)" },
       { name: "Water for boiling", amount: "As needed" }
     ],
     prepTimeMinutes: 15,
-    cookTimeMinutes: 25,
+    cookTimeMinutes: 30,
     servings: 4,
     difficulty: "Easy",
     rating: 5.0,
@@ -170,12 +171,11 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Rice & Stews",
     area: "Nigerian",
     instructions: [
-      "Blend tatashe red bell peppers, scotch bonnets, fresh tomatoes, and onions.",
-      "Fry sliced onions and tomato paste in vegetable oil for 5 minutes.",
-      "Add blended pepper mixture and cook until oil separates.",
-      "Add seasoned chicken broth, curry, thyme, bay leaves, and salt. Bring to a boil.",
-      "Stir in washed parboiled long-grain rice, cover tightly with foil and lid.",
-      "Cook on low heat for 35-40 minutes so steam cooks rice with signature smoky flavor."
+      "Blend Pepper Base (5 mins): In a blender, combine 5 large tatashe (red bell peppers), 3 scotch bonnets, 4 fresh tomatoes, and 1 onion. Blend until smooth paste.",
+      "Fry Stew Base (12 mins): Heat 1/2 cup vegetable oil in a heavy-bottomed pot over medium heat. Fry 1 sliced onion and 100g tomato paste for 6 minutes until darkened. Add blended pepper mixture and fry for 6 minutes until oil separates.",
+      "Season Stock (5 mins): Pour in 3.5 cups seasoned chicken stock, 1 tbsp curry powder, 1 tbsp dried thyme, 3 bay leaves, 2 stock cubes, and 1 tsp salt. Bring to a rolling boil over high heat.",
+      "Add Parboiled Rice & Seal (5 mins): Wash 4 cups long-grain parboiled rice until water runs clear. Add rice to boiling stew. Cover pot tightly with double layer aluminum foil, then seal with pot lid.",
+      "Steam & Smoke (35 mins): Turn heat to low. Steam rice undisturbed for 30 minutes. Turn heat to medium-high for final 5 minutes so bottom rice gently charrs, infusing signature smoky party flavor."
     ],
     ingredients: [
       { name: "Long-Grain Parboiled Rice", amount: "4 cups" },
@@ -188,7 +188,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Bay Leaves", amount: "3" }
     ],
     prepTimeMinutes: 20,
-    cookTimeMinutes: 45,
+    cookTimeMinutes: 50,
     servings: 6,
     difficulty: "Medium",
     rating: 5.0,
@@ -203,11 +203,11 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Rice & Stews",
     area: "Nigerian",
     instructions: [
-      "Wash Ofada rice thoroughly and boil with leaf infusion until tender.",
-      "Bleach palm oil in a covered pot on medium heat for 12-15 minutes until dark clear.",
-      "Sauté chopped onions and iru (fermented locust beans) in bleached palm oil.",
-      "Add coarse blended green bell peppers and scotch bonnets; fry down until thick.",
-      "Stir in diced fried beef, ponmo, shaki, and boiled eggs. Simmer for 15 minutes."
+      "Wash & Cook Ofada Rice (25 mins): Wash 3 cups local unpolished Ofada rice thoroughly. Boil in a pot with 4.5 cups water and 1 tsp salt over medium heat for 25 minutes until tender. Drain excess water and keep warm.",
+      "Bleach Palm Oil Safely (12-15 mins): Pour 1 cup red palm oil into a dry pot. Cover with lid and heat on medium for 12-15 minutes until oil turns dark clear. Turn off heat and allow pot to cool completely BEFORE opening lid to avoid smoke.",
+      "Sauté Iru & Onions (5 mins): Reheat bleached oil on medium, add 2 sliced onions and 2 tbsp iru (locust beans). Sauté for 5 minutes until aromatic.",
+      "Fry Green Pepper Sauce (15 mins): Add coarsely blended green bell peppers (6) and green rodo (3). Fry uncovered for 15 minutes, stirring frequently until water evaporates and oil rises to top.",
+      "Add Proteins & Simmer (10 mins): Add 200g cooked diced ponmo, 200g shaki, and 4 peeled boiled eggs. Simmer on medium-low for 10 minutes. Serve with hot Ofada rice in banana leaves."
     ],
     ingredients: [
       { name: "Local Ofada Rice", amount: "3 cups" },
@@ -220,7 +220,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Cow Tripe (Shaki)", amount: "200g" }
     ],
     prepTimeMinutes: 25,
-    cookTimeMinutes: 45,
+    cookTimeMinutes: 50,
     servings: 5,
     difficulty: "Medium",
     rating: 5.0,
@@ -237,11 +237,11 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Grills & Small Chops",
     area: "Nigerian",
     instructions: [
-      "Slice lean beef thinly into long ribbons.",
-      "Thread beef onto wooden skewers soaked in water.",
-      "Generously coat beef skewers with authentic Suya Yaji spice mix.",
-      "Drizzle with vegetable oil and grill over charcoal or in oven at 220°C for 12-15 minutes.",
-      "Serve piping hot dusted with extra yaji, sliced onions, and tomatoes."
+      "Slice Beef Ribbon-Thin (15 mins): Slice 600g lean flank steak thinly against grain into long flat ribbons (1/8-inch thick).",
+      "Coat in Suya Yaji (10 mins): Thread sliced beef onto wooden skewers soaked in water. Rub 1/2 cup authentic Suya Yaji spice mix liberally onto both sides of beef ribbons until thoroughly coated.",
+      "Preheat & Oil (5 mins): Preheat oven to 220°C (425°F) or ignite charcoal grill to high heat. Drizzle beef skewers with 3 tbsp vegetable oil.",
+      "Grill & Flip (12-15 mins): Grill skewers for 6 minutes, flip over, brush with oil, and grill for another 6 minutes until edges are crisp and charred.",
+      "Serve Hot (3 mins): Dust piping hot Suya skewers with extra yaji powder. Serve with thinly sliced red onions and ripe tomatoes."
     ],
     ingredients: [
       { name: "Flank Steak / Beef Sirloin", amount: "600g" },
@@ -251,7 +251,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Fresh Tomatoes", amount: "2" }
     ],
     prepTimeMinutes: 20,
-    cookTimeMinutes: 15,
+    cookTimeMinutes: 20,
     servings: 4,
     difficulty: "Easy",
     rating: 5.0,
@@ -266,10 +266,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Grills & Small Chops",
     area: "Nigerian",
     instructions: [
-      "Season goat meat pieces with garlic, ginger, thyme, onions, and stock cubes.",
-      "Boil until tender, then roast in oven at 200°C for 20 minutes to crisp outer edges.",
-      "Coarsely crush scotch bonnet peppers and bell peppers.",
-      "Sauté peppers and sliced onions in vegetable oil, toss roasted goat meat in pepper sauce for 5 minutes."
+      "Season & Boil Goat Meat (25 mins): Season 1kg bone-in goat meat pieces with 4 crushed garlic cloves, 1 tsp thyme, 2 stock cubes, 1 sliced onion, and 2 cups water. Boil over medium heat for 25 minutes until tender.",
+      "Roast Crisp Edges (20 mins): Transfer drained goat meat onto a baking tray. Roast at 200°C (400°F) for 20 minutes until meat is smoky and browned on edges.",
+      "Coarsely Crush Peppers (5 mins): Coarsely pulse 6 scotch bonnet peppers (rodo) and 1 red onion in a food processor (do NOT blend smooth).",
+      "Sauté & Toss (5 mins): Heat 3 tbsp oil in a wok over medium-high heat. Sauté crushed pepper mixture for 3 minutes, then toss roasted goat meat into spicy sauce for 2 minutes until glossy and coated."
     ],
     ingredients: [
       { name: "Goat Meat (Bone-in)", amount: "1kg" },
@@ -280,7 +280,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Seasoning Cubes", amount: "2 cubes" }
     ],
     prepTimeMinutes: 20,
-    cookTimeMinutes: 40,
+    cookTimeMinutes: 50,
     servings: 5,
     difficulty: "Medium",
     rating: 4.9,
@@ -297,10 +297,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Bakery & Snacks",
     area: "Nigerian",
     instructions: [
-      "Blend fresh corn with red bell peppers (tatashe), scotch bonnets, and onions into a coarse batter.",
-      "Stir warm red palm oil, ground crayfish, seasoning cubes, and salt into corn batter.",
-      "Ladle batter into banana leaves or foil containers, add flaked smoked catfish.",
-      "Steam over medium heat for 40-45 minutes until set and fragrant."
+      "Blend Corn Batter (10 mins): Slice fresh corn kernels off 4 cups yellow sweetcorn ears. Blend coarsely with 3 tatashe, 2 rodo, and 1 onion using minimal water.",
+      "Season Batter (5 mins): Stir 1/2 cup warm red palm oil, 3 tbsp ground crayfish, 2 stock cubes, and 1 tsp salt into batter until smooth orange color.",
+      "Wrap & Layer (10 mins): Ladle batter into clean banana leaves (or foil containers). Add pieces of 1 cup smoked catfish in center and seal tightly.",
+      "Steam Set (45 mins): Place wraps on a steam rack over boiling water in a large pot. Cover and steam over medium heat for 45 minutes until firm."
     ],
     ingredients: [
       { name: "Fresh Yellow Corn / Sweetcorn", amount: "4 cups" },
@@ -311,7 +311,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Smoked Catfish", amount: "1 cup" }
     ],
     prepTimeMinutes: 20,
-    cookTimeMinutes: 45,
+    cookTimeMinutes: 50,
     servings: 5,
     difficulty: "Medium",
     rating: 5.0,
@@ -326,10 +326,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Bakery & Snacks",
     area: "Nigerian",
     instructions: [
-      "Dissolve yeast and sugar in warm water; let sit for 5 minutes.",
-      "Mix flour, sugar, nutmeg, and salt; pour in yeast water and whisk into smooth batter.",
-      "Cover and let rise for 45-60 minutes until doubled.",
-      "Deep fry scoops in hot oil for 4-5 minutes until golden brown."
+      "Proof Yeast (5-10 mins): In a bowl, dissolve 2.5 tsp active dry yeast and 1 tbsp sugar in 1.5 cups warm water (40°C/105°F). Let sit for 8 minutes until frothy.",
+      "Mix Batter (5 mins): Sift 3 cups flour, 1/2 cup sugar, 1 tsp nutmeg, and 1/2 tsp salt into yeast water. Whisk for 3 minutes into a thick smooth batter.",
+      "Rise Dough (45-60 mins): Cover bowl tightly with plastic wrap and place in a warm spot for 50 minutes until batter doubles in size and shows bubbles.",
+      "Deep Fry Golden (5 mins per batch): Heat 4 cups vegetable oil to 170°C (340°F) in a deep pot. Drop rounded scoops of batter using wet hands. Fry for 4-5 minutes, turning constantly until golden brown."
     ],
     ingredients: [
       { name: "All-Purpose Flour", amount: "3 cups" },
@@ -339,7 +339,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Vegetable Oil for deep frying", amount: "4 cups" }
     ],
     prepTimeMinutes: 15,
-    cookTimeMinutes: 15,
+    cookTimeMinutes: 20,
     servings: 6,
     difficulty: "Easy",
     rating: 5.0,
@@ -354,12 +354,11 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Bakery & Snacks",
     area: "Nigerian",
     instructions: [
-      "Sift flour, sugar, baking powder, nutmeg, and salt into a bowl.",
-      "Rub cold butter into flour until it resembles fine breadcrumbs.",
-      "Whisk egg and evaporated milk together; pour into flour and knead into a smooth stiff dough.",
-      "Roll out dough on a floured surface to 1/6-inch thickness.",
-      "Cut into small uniform crunchy squares using a pizza cutter.",
-      "Deep fry in medium-hot oil for 3-4 minutes until golden brown and crunchy. Cool completely to crunch up."
+      "Mix Dry Ingredients (5 mins): Sift 4 cups flour, 1/2 cup sugar, 1 tsp nutmeg, 1 tsp baking powder, and 1/2 tsp salt into a large bowl.",
+      "Rub Butter (5 mins): Rub 100g cold unsalted butter into flour mixture using fingertips until fine breadcrumb consistency forms.",
+      "Form Stiff Dough (5 mins): Whisk 1/2 cup evaporated milk and 1 egg together. Pour into flour and knead gently into a smooth stiff dough.",
+      "Roll & Cut Squares (10 mins): Roll dough out on floured surface to 1/6-inch thickness. Cut into tiny uniform 1cm squares using a pizza cutter.",
+      "Fry Crunchy (4 mins per batch): Fry squares in medium-hot oil (165°C) for 3-4 minutes until golden brown. Cool completely on paper towels to crunch up."
     ],
     ingredients: [
       { name: "All-Purpose Flour", amount: "4 cups" },
@@ -386,12 +385,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Bakery & Snacks",
     area: "Nigerian",
     instructions: [
-      "Sift flour and salt into a bowl, rub in cold butter until fine breadcrumb consistency.",
-      "Add ice cold water gradually and gently bring together into a smooth pastry dough; wrap and chill for 30 minutes.",
-      "Sauté diced onions, minced beef, diced potatoes, and carrots with garlic, thyme, curry powder, and stock cubes until tender.",
-      "Stir in a flour-water slurry to bind filling into a thick glossy savory gravy; cool completely.",
-      "Roll dough to 3mm thickness, cut out rounds, spoon filling onto center, brush edges with egg wash, and fold into half-moons.",
-      "Crimp edges firmly with a fork, prick top for steam, brush with egg wash, and bake at 180°C (350°F) for 30-35 minutes until deep golden."
+      "Make Shortcrust Pastry (15 mins + 30 mins chill): Sift 500g flour and 1 tsp salt. Rub in 250g cold butter until breadcrumbs form. Add 1/2 cup ice water gradually to form smooth pastry dough; wrap and chill for 30 minutes.",
+      "Cook Meat Filling (20 mins): Sauté 1 diced onion, 400g minced beef, 1 diced potato, and 1 diced carrot with 1 tbsp curry, 1 tsp thyme, 2 garlic cloves, and stock cubes for 12 minutes. Stir in flour slurry to form thick gravy; cool completely.",
+      "Assemble Half-Moons (15 mins): Roll pastry to 3mm thickness, cut out 15cm rounds, spoon filling onto center, brush edges with egg wash, fold over into half-moons, and crimp edges with a fork.",
+      "Bake Golden (30-35 mins): Prick tops for steam, brush with egg wash, and bake at 180°C (350°F) for 30-35 minutes until rich golden brown."
     ],
     ingredients: [
       { name: "All-Purpose Flour", amount: "500g" },
@@ -405,7 +402,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Egg Wash (for glazing)", amount: "1 egg beaten" }
     ],
     prepTimeMinutes: 35,
-    cookTimeMinutes: 30,
+    cookTimeMinutes: 35,
     servings: 6,
     difficulty: "Medium",
     rating: 5.0,
@@ -420,9 +417,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "Nigerian Snacks & Breakfast",
     area: "Nigerian",
     instructions: [
-      "Blend peeled black-eyed beans with tatashe peppers and onions into a smooth batter.",
-      "Whisk in vegetable oil, crayfish, seasoning cubes, and warm water.",
-      "Ladle into containers with boiled eggs and smoked fish; steam for 45 minutes."
+      "Peel & Blend Beans (20 mins): Soak 3 cups black-eyed beans for 10 mins, rub off skins, and wash clean. Blend peeled beans with 4 tatashe peppers and 1 onion until silky smooth.",
+      "Season Batter (5 mins): Whisk 3/4 cup vegetable oil, 3 tbsp ground crayfish, 2 stock cubes, and 1.5 cups warm water into batter until light and fluffy.",
+      "Ladle & Add Eggs (10 mins): Ladle batter into leaf cones or containers. Insert slices of 3 boiled eggs and flaked smoked fish into center; seal tightly.",
+      "Steam Firm (45-50 mins): Steam over medium heat in a covered pot for 45-50 minutes until toothpick inserted in center comes out clean."
     ],
     ingredients: [
       { name: "Peeled Black-Eyed Beans", amount: "3 cups" },
@@ -449,11 +447,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "International",
     area: "Italian",
     instructions: [
-      "Boil spaghetti in salted water until al dente.",
-      "Crisp diced guanciale or pancetta in a pan over medium heat until golden.",
-      "Whisk egg yolks, Pecorino Romano, and black pepper together in a bowl.",
-      "Toss hot drained pasta with pancetta and remove from heat.",
-      "Quickly pour egg mixture into pasta, tossing vigorously with pasta water to create a creamy sauce."
+      "Boil Pasta Al Dente (9 mins): Bring 4 liters salted water to boil. Cook 400g spaghetti pasta for 8-9 minutes until al dente. Reserve 1 cup pasta water before draining.",
+      "Crisp Pancetta (6 mins): In a large skillet, sauté 150g diced pancetta or guanciale over medium heat for 6 minutes until crispy and fat renders.",
+      "Whisk Egg Cheese Sauce (3 mins): In a bowl, whisk 4 egg yolks, 1/2 cup grated Pecorino Romano cheese, and 1 tsp freshly cracked black pepper until thick paste.",
+      "Combine & Emulsify Off Heat (3 mins): Toss hot drained spaghetti directly into skillet with pancetta off heat. Pour in egg mixture immediately, tossing rapidly while splashing 1/4 cup hot pasta water to create a silky glossy sauce without scrambling eggs. Serve warm."
     ],
     ingredients: [
       { name: "Spaghetti Pasta", amount: "400g" },
@@ -463,7 +460,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Freshly Cracked Black Pepper", amount: "1 tsp" }
     ],
     prepTimeMinutes: 10,
-    cookTimeMinutes: 15,
+    cookTimeMinutes: 20,
     servings: 4,
     difficulty: "Easy",
     rating: 4.9,
@@ -478,10 +475,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "International",
     area: "Japanese",
     instructions: [
-      "Pan-sear boneless chicken thighs skin-side down until golden crisp.",
-      "Whisk soy sauce, mirin, sake, and brown sugar into a glaze.",
-      "Pour glaze over chicken and simmer until sauce thickens to a rich syrup.",
-      "Slice chicken and serve over warm steamed rice, garnished with sesame seeds and spring onions."
+      "Sear Chicken Thighs (8 mins): Heat 1 tbsp oil in a skillet on medium-high. Sear 500g boneless skin-on chicken thighs skin-side down for 5 minutes until crispy golden, flip and cook for 3 minutes.",
+      "Simmer Teriyaki Sauce (5 mins): Mix 3 tbsp soy sauce, 2 tbsp mirin, and 1 tbsp brown sugar. Pour into skillet with chicken.",
+      "Glaze & Reduce (4 mins): Simmer sauce over medium heat for 4 minutes, turning chicken repeatedly until sauce thickens into a glossy syrupy glaze.",
+      "Assemble Bowl (3 mins): Slice teriyaki chicken into strips. Serve over bowls of warm steamed jasmine rice, garnished with toasted sesame seeds and sliced spring onions."
     ],
     ingredients: [
       { name: "Chicken Thighs (Boneless)", amount: "500g" },
@@ -493,7 +490,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Spring Onions", amount: "2 stalks" }
     ],
     prepTimeMinutes: 15,
-    cookTimeMinutes: 15,
+    cookTimeMinutes: 20,
     servings: 3,
     difficulty: "Easy",
     rating: 4.8,
@@ -508,10 +505,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     category: "International",
     area: "Mexican",
     instructions: [
-      "Brown ground beef in a skillet over medium heat and drain excess fat.",
-      "Stir in taco seasoning and water; simmer for 5 minutes until rich and thick.",
-      "Warm corn tortilla shells on a dry skillet for 30 seconds per side.",
-      "Fill tortillas with seasoned beef, topped with cheddar, pico de gallo, and sour cream."
+      "Brown Ground Beef (7 mins): Brown 500g ground beef sirloin in a skillet over medium-high heat for 7 minutes, breaking apart with a wooden spoon until cooked through. Drain excess fat.",
+      "Simmer Taco Seasoning (5 mins): Add 2 tbsp taco seasoning mix and 1/3 cup water. Simmer on medium-low for 5 minutes until sauce coats beef thick and juicy.",
+      "Warm Tortilla Shells (3 mins): Heat 8 corn tortilla shells on a dry skillet over medium heat for 30 seconds per side until pliable and warm.",
+      "Assemble Tacos (3 mins): Spoon seasoned beef into warm tortillas, topped with shredded cheddar, fresh pico de gallo salsa, sour cream, and fresh lime juice."
     ],
     ingredients: [
       { name: "Ground Beef Sirloin", amount: "500g" },
@@ -522,7 +519,7 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Sour Cream", amount: "1/4 cup" }
     ],
     prepTimeMinutes: 15,
-    cookTimeMinutes: 15,
+    cookTimeMinutes: 18,
     servings: 4,
     difficulty: "Easy",
     rating: 5.0,
