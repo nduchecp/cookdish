@@ -61,20 +61,17 @@ export default function ProfilePage() {
         </button>
       </div>
 
-      {/* PWA App Install Callout Banner */}
-      <div className="bg-[#1F1D1B] text-white rounded-3xl p-5 border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-md">
-        <div className="flex items-center gap-3.5 text-center sm:text-left">
-          <div className="w-12 h-12 rounded-2xl bg-[#E8734A] text-white flex items-center justify-center shrink-0 shadow-sm">
-            <Smartphone className="w-6 h-6" />
+      {/* Sleek Compact PWA App Install Banner */}
+      <div className="bg-[#1F1D1B] text-white rounded-2xl p-3.5 sm:p-4 border border-white/10 flex items-center justify-between gap-3 shadow-sm">
+        <div className="flex items-center gap-3 min-w-0">
+          <div className="w-9 h-9 rounded-xl bg-[#E8734A] text-white flex items-center justify-center shrink-0 shadow-xs">
+            <Smartphone className="w-5 h-5" />
           </div>
-          <div>
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E8734A] block">
-              Official PWA Mobile App
-            </span>
-            <h4 className="text-base font-extrabold text-white">
-              Install CookDish App
+          <div className="min-w-0">
+            <h4 className="text-xs sm:text-sm font-extrabold text-white truncate">
+              Install CookDish Mobile App
             </h4>
-            <p className="text-xs text-white/80">
+            <p className="text-[11px] text-white/80 truncate">
               Add to home screen for 1-tap launch & offline cooking
             </p>
           </div>
@@ -82,10 +79,10 @@ export default function ProfilePage() {
         <button
           type="button"
           onClick={handleManualPwaInstall}
-          className="w-full sm:w-auto bg-[#E8734A] hover:bg-[#D66239] text-white text-xs font-extrabold px-5 py-3 rounded-2xl flex items-center justify-center gap-2 transition-all shadow-sm active:scale-95 cursor-pointer shrink-0"
+          className="bg-[#E8734A] hover:bg-[#D66239] text-white text-xs font-extrabold px-3.5 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-xs active:scale-95 cursor-pointer shrink-0"
         >
-          <Download className="w-4 h-4" />
-          <span>Install App</span>
+          <Download className="w-3.5 h-3.5" />
+          <span>Install</span>
         </button>
       </div>
 
@@ -221,7 +218,7 @@ export default function ProfilePage() {
           Culinary Workspaces & Tools
         </h3>
 
-        <div className="bg-white rounded-3xl border border-[#EFE6DD] overflow-hidden divide-y divide-[#EFE6DD] shadow-xs">
+        <div className="bg-[#1F1D1B]/5 rounded-3xl border border-[#EFE6DD] overflow-hidden divide-y divide-[#EFE6DD] shadow-xs">
           {/* Meal Planner */}
           <Link
             href="/profile/planner"
@@ -248,7 +245,7 @@ export default function ProfilePage() {
             href="/profile/shopping-list"
             className="flex items-center justify-between p-5 hover:bg-[#FDF6EF] transition-colors group"
           >
-            <div className="flex items-[#E8734A] gap-4">
+            <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-[#FDF6EF] text-[#E8734A] flex items-center justify-center border border-[#EFE6DD] group-hover:bg-[#E8734A] group-hover:text-white transition-all shadow-xs">
                 <ShoppingBag className="w-6 h-6" />
               </div>
