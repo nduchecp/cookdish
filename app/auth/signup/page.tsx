@@ -1,183 +1,61 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Lock, Mail, User, Eye, EyeOff, Sparkles, ChefHat } from "lucide-react";
+import { UtensilsCrossed, ArrowRight } from "lucide-react";
 
-export default function SignUpPage() {
-  const router = useRouter();
-  const [fullName, setFullName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [preferredCuisine, setPreferredCuisine] = useState("Nigerian Traditional");
-  const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      router.push("/profile");
-    }, 800);
-  };
-
+export default function SignupPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#141312] via-[#1F1D1B] to-[#141312] text-white flex flex-col justify-between p-4 sm:p-6 lg:p-8 font-sans antialiased">
-      {/* Top Header Link */}
-      <div className="max-w-7xl w-full mx-auto flex justify-between items-center">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-xs font-bold text-white/70 hover:text-white bg-white/5 hover:bg-white/10 px-4 py-2.5 rounded-2xl border border-white/10 transition-all active:scale-95"
-        >
-          <ArrowLeft className="w-4 h-4 text-[#E8734A]" />
-          <span>Back to Landing</span>
-        </Link>
-
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#E8734A] to-[#F59E0B] flex items-center justify-center text-sm font-extrabold text-white shadow-md">
-            🍳
+    <div className="min-h-screen bg-[#FDF6EF] flex flex-col justify-center p-6 sm:p-10">
+      <div className="max-w-md w-full mx-auto space-y-6">
+        <div className="text-center space-y-2">
+          <div className="w-12 h-12 rounded-2xl bg-[#E8734A] text-white flex items-center justify-center mx-auto shadow-md">
+            <UtensilsCrossed className="w-6 h-6" />
           </div>
-          <span className="font-extrabold text-base tracking-tight text-white">CookDish</span>
+          <h1 className="text-3xl font-extrabold text-[#1F1D1B]">Create Account</h1>
+          <p className="text-sm text-[#6E6B68]">Join CookDish to organize and discover recipes</p>
         </div>
-      </div>
 
-      {/* Main Glassmorphism Auth Card Container */}
-      <div className="my-auto max-w-md w-full mx-auto space-y-6">
-        <div className="bg-[#1F1D1B]/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 relative overflow-hidden">
-          {/* Decorative Glow */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-[#E8734A]/10 rounded-full blur-2xl pointer-events-none" />
-
-          <div className="text-center space-y-2 relative z-10">
-            <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest bg-[#E8734A] text-white px-3 py-1 rounded-full shadow-xs">
-              Join 10,000+ Home Chefs
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Create Chef Account</h1>
-            <p className="text-xs text-white/60">Unlock weekly meal planner, shopping list & custom recipes</p>
+        <form className="bg-white rounded-3xl p-6 sm:p-8 border border-[#EFE6DD] space-y-4 shadow-sm">
+          <div className="space-y-1">
+            <label className="block text-xs font-bold text-[#1F1D1B]">Full Name</label>
+            <input
+              type="text"
+              placeholder="Chef Alex"
+              className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-xl p-3 text-sm text-[#1F1D1B] focus:border-[#E8734A] focus:outline-none"
+            />
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4 text-xs relative z-10">
-            {/* Full Name & Username */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <label className="font-bold text-white/90 block">Full Name</label>
-                <div className="relative">
-                  <User className="w-4 h-4 text-white/40 absolute left-3.5 top-3.5" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Promise"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl pl-10 pr-3 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A]"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="font-bold text-white/90 block">Chef Handle</label>
-                <div className="relative">
-                  <ChefHat className="w-4 h-4 text-white/40 absolute left-3.5 top-3.5" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Promise"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl pl-10 pr-3 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A]"
-                  />
-                </div>
-                <span className="text-[10px] text-white/50 block">Displayed as Chef {username || "Promise"}</span>
-              </div>
-            </div>
-
-            {/* Email Field */}
-            <div className="space-y-1.5">
-              <label className="font-bold text-white/90 block">Email Address</label>
-              <div className="relative">
-                <Mail className="w-4 h-4 text-white/40 absolute left-4 top-3.5" />
-                <input
-                  type="email"
-                  required
-                  placeholder="chef.promise@cookdish.app"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A]"
-                />
-              </div>
-            </div>
-
-            {/* Password Field */}
-            <div className="space-y-1.5">
-              <label className="font-bold text-white/90 block">Password</label>
-              <div className="relative">
-                <Lock className="w-4 h-4 text-white/40 absolute left-4 top-3.5" />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  required
-                  placeholder="Create password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-11 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A]"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-3.5 text-white/40 hover:text-white transition-colors"
-                >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-            </div>
-
-            {/* Preferred Cuisine */}
-            <div className="space-y-1.5">
-              <label className="font-bold text-white/90 block">Preferred Culinary Style</label>
-              <select
-                value={preferredCuisine}
-                onChange={(e) => setPreferredCuisine(e.target.value)}
-                className="w-full bg-[#2A2725] border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-[#E8734A]"
-              >
-                <option value="Nigerian Traditional">Nigerian Traditional Cuisine (Igbo, Yoruba, Hausa)</option>
-                <option value="West African Fusion">West African Fusion</option>
-                <option value="Global Home Cooking">Global Home Cooking</option>
-                <option value="Vegetarian & Healthy">Vegetarian & Healthy</option>
-              </select>
-            </div>
-
-            {/* Submit Action Button */}
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-[#E8734A] hover:bg-[#D66239] text-white font-extrabold py-3.5 rounded-2xl transition-all shadow-md cursor-pointer active:scale-95 flex items-center justify-center gap-2 text-sm mt-2"
-            >
-              {isLoading ? (
-                <span>Creating Account...</span>
-              ) : (
-                <>
-                  <span>Create Chef Account</span>
-                  <Sparkles className="w-4 h-4 fill-white" />
-                </>
-              )}
-            </button>
-          </form>
-
-          <div className="text-center border-t border-white/10 pt-4 relative z-10">
-            <p className="text-xs text-white/60">
-              Already have an account?{" "}
-              <Link href="/auth/signin" className="font-extrabold text-[#E8734A] hover:underline">
-                Sign In
-              </Link>
-            </p>
+          <div className="space-y-1">
+            <label className="block text-xs font-bold text-[#1F1D1B]">Email Address</label>
+            <input
+              type="email"
+              placeholder="chef@example.com"
+              className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-xl p-3 text-sm text-[#1F1D1B] focus:border-[#E8734A] focus:outline-none"
+            />
           </div>
-        </div>
-      </div>
 
-      {/* Footer copyright */}
-      <div className="text-center text-xs text-white/40 py-2">
-        © 2026 CookDish App • Premium Culinary Platform
+          <div className="space-y-1">
+            <label className="block text-xs font-bold text-[#1F1D1B]">Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-xl p-3 text-sm text-[#1F1D1B] focus:border-[#E8734A] focus:outline-none"
+            />
+          </div>
+
+          <Link
+            href="/"
+            className="w-full bg-[#E8734A] text-white py-3.5 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#D66239] transition-all shadow-md mt-2"
+          >
+            <span>Create Account</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+
+          <p className="text-center text-xs text-[#6E6B68] pt-2">
+            Already have an account?{" "}
+            <Link href="/auth/login" className="text-[#E8734A] font-bold hover:underline">
+              Sign In
+            </Link>
+          </p>
+        </form>
       </div>
     </div>
   );
