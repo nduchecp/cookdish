@@ -3,15 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Lock, Mail, User, Eye, EyeOff, Sparkles, ChefHat } from "lucide-react";
+import { ArrowLeft, Lock, Mail, Eye, EyeOff, Sparkles, CheckCircle2 } from "lucide-react";
 
-export default function SignUpPage() {
+export default function SignInPage() {
   const router = useRouter();
-  const [fullName, setFullName] = useState("");
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [preferredCuisine, setPreferredCuisine] = useState("Nigerian Traditional");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,47 +49,13 @@ export default function SignUpPage() {
 
           <div className="text-center space-y-2 relative z-10">
             <span className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-widest bg-[#E8734A] text-white px-3 py-1 rounded-full shadow-xs">
-              Join 10,000+ Home Chefs
+              Welcome Back
             </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Create Chef Account</h1>
-            <p className="text-xs text-white/60">Unlock weekly meal planner, shopping list & custom recipes</p>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-white">Sign In to CookDish</h1>
+            <p className="text-xs text-white/60">Access your saved recipes, meal plans & shopping list</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 text-xs relative z-10">
-            {/* Full Name & Username */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="space-y-1.5">
-                <label className="font-bold text-white/90 block">Full Name</label>
-                <div className="relative">
-                  <User className="w-4 h-4 text-white/40 absolute left-3.5 top-3.5" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Promise"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl pl-10 pr-3 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A]"
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1.5">
-                <label className="font-bold text-white/90 block">Chef Handle</label>
-                <div className="relative">
-                  <ChefHat className="w-4 h-4 text-white/40 absolute left-3.5 top-3.5" />
-                  <input
-                    type="text"
-                    required
-                    placeholder="Promise"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    className="w-full bg-white/5 border border-white/10 rounded-2xl pl-10 pr-3 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A]"
-                  />
-                </div>
-                <span className="text-[10px] text-white/50 block">Displayed as Chef {username || "Promise"}</span>
-              </div>
-            </div>
-
             {/* Email Field */}
             <div className="space-y-1.5">
               <label className="font-bold text-white/90 block">Email Address</label>
@@ -104,23 +67,28 @@ export default function SignUpPage() {
                   placeholder="chef.promise@cookdish.app"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A] transition-colors"
                 />
               </div>
             </div>
 
             {/* Password Field */}
             <div className="space-y-1.5">
-              <label className="font-bold text-white/90 block">Password</label>
+              <div className="flex justify-between items-center">
+                <label className="font-bold text-white/90 block">Password</label>
+                <a href="#" className="text-[11px] font-bold text-[#E8734A] hover:underline">
+                  Forgot?
+                </a>
+              </div>
               <div className="relative">
                 <Lock className="w-4 h-4 text-white/40 absolute left-4 top-3.5" />
                 <input
                   type={showPassword ? "text" : "password"}
                   required
-                  placeholder="Create password"
+                  placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-11 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-11 py-3 text-white placeholder-white/40 focus:outline-none focus:border-[#E8734A] transition-colors"
                 />
                 <button
                   type="button"
@@ -132,19 +100,17 @@ export default function SignUpPage() {
               </div>
             </div>
 
-            {/* Preferred Cuisine */}
-            <div className="space-y-1.5">
-              <label className="font-bold text-white/90 block">Preferred Culinary Style</label>
-              <select
-                value={preferredCuisine}
-                onChange={(e) => setPreferredCuisine(e.target.value)}
-                className="w-full bg-[#2A2725] border border-white/10 rounded-2xl px-4 py-3 text-white focus:outline-none focus:border-[#E8734A]"
-              >
-                <option value="Nigerian Traditional">Nigerian Traditional Cuisine (Igbo, Yoruba, Hausa)</option>
-                <option value="West African Fusion">West African Fusion</option>
-                <option value="Global Home Cooking">Global Home Cooking</option>
-                <option value="Vegetarian & Healthy">Vegetarian & Healthy</option>
-              </select>
+            {/* Remember Me Checkbox */}
+            <div className="flex items-center gap-2 pt-1">
+              <input
+                type="checkbox"
+                id="remember"
+                defaultChecked
+                className="w-4 h-4 accent-[#E8734A] rounded cursor-pointer"
+              />
+              <label htmlFor="remember" className="text-xs text-white/70 font-medium cursor-pointer">
+                Keep me signed in on this device
+              </label>
             </div>
 
             {/* Submit Action Button */}
@@ -154,10 +120,10 @@ export default function SignUpPage() {
               className="w-full bg-[#E8734A] hover:bg-[#D66239] text-white font-extrabold py-3.5 rounded-2xl transition-all shadow-md cursor-pointer active:scale-95 flex items-center justify-center gap-2 text-sm mt-2"
             >
               {isLoading ? (
-                <span>Creating Account...</span>
+                <span>Signing In...</span>
               ) : (
                 <>
-                  <span>Create Chef Account</span>
+                  <span>Sign In to Account</span>
                   <Sparkles className="w-4 h-4 fill-white" />
                 </>
               )}
@@ -166,9 +132,9 @@ export default function SignUpPage() {
 
           <div className="text-center border-t border-white/10 pt-4 relative z-10">
             <p className="text-xs text-white/60">
-              Already have an account?{" "}
-              <Link href="/auth/signin" className="font-extrabold text-[#E8734A] hover:underline">
-                Sign In
+              Don&apos;t have an account?{" "}
+              <Link href="/auth/signup" className="font-extrabold text-[#E8734A] hover:underline">
+                Create Chef Account
               </Link>
             </p>
           </div>
