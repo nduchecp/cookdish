@@ -14,6 +14,7 @@ import {
   RotateCcw,
   Volume2,
   VolumeX,
+  Bell,
 } from "lucide-react";
 import { NormalizedRecipe } from "@/lib/api/themealdb";
 
@@ -45,7 +46,78 @@ export function extractMinutesFromStep(step: string): number {
     const mins = parseInt(match[1], 10);
     if (!isNaN(mins) && mins > 0) return mins;
   }
-  return 5; // Default 5 mins if no duration specified
+  return 5;
+}
+
+/**
+ * Web Audio API Chime Synthesizer
+ * Plays high-clarity 0ms latency audio beeps/chimes without external mp3 files
+ */
+export function playAudioChime(type: "completion" | "timerDone" | "victory") {
+  if (typeof window === "undefined") return;
+  try {
+    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+
+    if (type === "completion") {
+      // Crisp 2-note ding-ding chime for completing a step
+      const now = ctx.currentTime;
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = "sine";
+      osc1.frequency.setValueAtTime(523.25, now); // C5
+      gain1.gain.setValueAtTime(0.3, now);
+      gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(now);
+      osc1.stop(now + 0.25);
+
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = "sine";
+      osc2.frequency.setValueAtTime(659.25, now + 0.12); // E5
+      gain2.gain.setValueAtTime(0.4, now + 0.12);
+      gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(now + 0.12);
+      osc2.stop(now + 0.45);
+    } else if (type === "timerDone") {
+      // 3-note chime for timer completion
+      const now = ctx.currentTime;
+      [880, 1046.5, 1318.5].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now + idx * 0.12);
+        gain.gain.setValueAtTime(0.5, now + idx * 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.12 + 0.35);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.12);
+        osc.stop(now + idx * 0.12 + 0.35);
+      });
+    } else if (type === "victory") {
+      // Victory fanfare chime for completing recipe
+      const now = ctx.currentTime;
+      [523.25, 659.25, 783.99, 1046.5].forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, now + idx * 0.14);
+        gain.gain.setValueAtTime(0.4, now + idx * 0.14);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.14 + 0.5);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.14);
+        osc.stop(now + idx * 0.14 + 0.5);
+      });
+    }
+  } catch (err) {
+    console.error("Audio chime playback error:", err);
+  }
 }
 
 export default function CookingClientView({ recipe, source, id }: CookingClientViewProps) {
@@ -82,6 +154,13 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
     }
   }, [currentStep]);
 
+  // Victory audio chime when finished
+  useEffect(() => {
+    if (isFinished) {
+      playAudioChime("victory");
+    }
+  }, [isFinished]);
+
   // Guaranteed React Timer Countdown Effect (Dependency: isTimerRunning ONLY)
   useEffect(() => {
     if (!isTimerRunning) return;
@@ -103,7 +182,7 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
   // Speech Synthesis Voice Assistant
   const speakStep = (stepText: string, stepNum: number) => {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      window.speechSynthesis.cancel(); // Stop active speech
+      window.speechSynthesis.cancel();
       const parsed = parseStepText(stepText);
       const textToSpeak = parsed.title
         ? `Step ${stepNum}: ${parsed.title}. ${parsed.body}`
@@ -117,6 +196,7 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
   };
 
   const playTimerAlarm = () => {
+    playAudioChime("timerDone");
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       const alarmText = `Timer complete for step ${currentStep + 1}! Check your cooking.`;
       const utterance = new SpeechSynthesisUtterance(alarmText);
@@ -145,10 +225,12 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
 
   const handleNextStep = () => {
     if (currentStep < totalSteps - 1) {
+      playAudioChime("completion"); // Play audio chime sound per completed instruction!
       setCurrentStep((prev) => prev + 1);
       const mainContainer = document.getElementById("cook-scroll-container");
       if (mainContainer) mainContainer.scrollTop = 0;
     } else {
+      playAudioChime("victory"); // Play victory fanfare chime on final step!
       setIsFinished(true);
       if (typeof window !== "undefined" && "speechSynthesis" in window) {
         window.speechSynthesis.cancel();
@@ -259,8 +341,9 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-5">
-            <span className="text-xs font-bold uppercase tracking-wider bg-[#E8734A] text-white px-3.5 py-1 rounded-full shadow-xs">
-              Step {currentStep + 1} Instructions
+            <span className="text-xs font-bold uppercase tracking-wider bg-[#E8734A] text-white px-3.5 py-1 rounded-full shadow-xs flex items-center gap-1.5">
+              <Bell className="w-3.5 h-3.5" />
+              <span>Step {currentStep + 1} Instructions</span>
             </span>
           </div>
         </div>
@@ -299,10 +382,13 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
           {/* Hands-Free Voice Reader Button */}
           <button
             type="button"
-            onClick={() => speakStep(currentInstruction, currentStep + 1)}
+            onClick={() => {
+              playAudioChime("completion");
+              speakStep(currentInstruction, currentStep + 1);
+            }}
             className="w-full flex items-center justify-center gap-2 bg-[#FDF6EF] hover:bg-[#E8734A] hover:text-white border border-[#EFE6DD] text-[#1F1D1B] py-3 rounded-2xl text-xs font-bold transition-all shadow-2xs cursor-pointer active:scale-95 touch-manipulation"
           >
-            <Volume2 className="w-4 h-4 text-[#E8734A] group-hover:text-white" />
+            <Volume2 className="w-4 h-4 text-[#E8734A]" />
             <span>Read Step Aloud (Hands-Free)</span>
           </button>
 
