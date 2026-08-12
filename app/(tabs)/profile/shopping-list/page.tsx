@@ -13,7 +13,7 @@ interface ShoppingItem {
   checked: boolean;
 }
 
-// Real authentic ingredients aggregated from local dishes (Egusi, Jollof, Oha, Suya, Pounded Yam)
+// Real atomic ingredients aggregated from local dishes (Egusi, Jollof, Oha, Suya, Pounded Yam)
 const REAL_NIGERIAN_INGREDIENTS: ShoppingItem[] = [
   {
     id: "ing-1",
@@ -40,9 +40,17 @@ const REAL_NIGERIAN_INGREDIENTS: ShoppingItem[] = [
     checked: false,
   },
   {
-    id: "ing-4",
-    name: "Smoked Catfish & Stockfish",
-    amount: "2 cups total",
+    id: "ing-4a",
+    name: "Smoked Catfish",
+    amount: "1 cup",
+    recipeName: "Egusi & Ogbono Soup",
+    category: "Soups & Swallows",
+    checked: true,
+  },
+  {
+    id: "ing-4b",
+    name: "Stockfish",
+    amount: "1 cup",
     recipeName: "Egusi & Ogbono Soup",
     category: "Soups & Swallows",
     checked: true,
@@ -64,9 +72,17 @@ const REAL_NIGERIAN_INGREDIENTS: ShoppingItem[] = [
     checked: false,
   },
   {
-    id: "ing-7",
-    name: "Tatashe (Red Bell Peppers) & Rodo",
-    amount: "8 tatashe, 5 habaneros",
+    id: "ing-7a",
+    name: "Tatashe Red Bell Peppers",
+    amount: "8 large",
+    recipeName: "Party Jollof & Asun",
+    category: "Rice & Stews",
+    checked: false,
+  },
+  {
+    id: "ing-7b",
+    name: "Scotch Bonnet Peppers (Rodo)",
+    amount: "5 medium",
     recipeName: "Party Jollof & Asun",
     category: "Rice & Stews",
     checked: false,
@@ -88,9 +104,17 @@ const REAL_NIGERIAN_INGREDIENTS: ShoppingItem[] = [
     checked: false,
   },
   {
-    id: "ing-10",
-    name: "Ground Crayfish & Seasoning Cubes",
-    amount: "1/2 cup crayfish, 6 cubes",
+    id: "ing-10a",
+    name: "Ground Crayfish",
+    amount: "1/2 cup",
+    recipeName: "General Pantry",
+    category: "General Pantry",
+    checked: true,
+  },
+  {
+    id: "ing-10b",
+    name: "Seasoning Cubes",
+    amount: "6 cubes",
     recipeName: "General Pantry",
     category: "General Pantry",
     checked: true,

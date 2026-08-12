@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Soup, Utensils } from "lucide-react";
+import { Soup, Utensils, Flame, Cookie, Layers } from "lucide-react";
 import { getTheMealDBCategories, MealDBCategory } from "@/lib/api/themealdb";
 
 export default function CategoriesPage() {
@@ -20,7 +20,7 @@ export default function CategoriesPage() {
   }, []);
 
   return (
-    <div className="space-y-6 w-full">
+    <div className="space-y-6 w-full pb-12">
       <div className="space-y-1">
         <span className="text-[#E8734A] text-xs font-extrabold tracking-widest uppercase block">
           Culinary Hub
@@ -29,42 +29,74 @@ export default function CategoriesPage() {
           Recipe Categories
         </h1>
         <p className="text-[#6E6B68] text-sm font-medium">
-          Explore by traditional Nigerian soups, course, or global cuisine
+          Explore by traditional Nigerian soups, rice & stews, grills, snacks, or global course
         </p>
       </div>
 
-      {/* Compact Featured Category Cards (Zero elongation) */}
+      {/* Featured Category Groupings Grid (Reflecting All Seeded Recipe Groupings) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* 1. Soups & Swallows */}
         <Link
           href="/categories/nigerian-soups"
           className="relative bg-gradient-to-r from-[#E8734A] via-[#ED7D55] to-[#D66239] text-white rounded-3xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-all flex items-center justify-between group overflow-hidden"
         >
           <div className="space-y-1 max-w-[80%] z-10">
             <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug">
-              Nigerian Traditional Soups
+              Soups & Swallows
             </h2>
             <p className="text-xs text-white/85 font-medium leading-normal line-clamp-1">
-              Oha, Afang, Edikang Ikong, Okazi & Onugbu (Bitterleaf)
+              Oha, Egusi, Ogbono, Okra Soup & Pounded Yam
             </p>
           </div>
-
           <Soup className="w-8 h-8 text-white/85 group-hover:text-white group-hover:scale-110 transition-all shrink-0 ml-3 z-10" />
         </Link>
 
+        {/* 2. Rice & Stews */}
         <Link
-          href="/categories/nigerian"
+          href="/categories/rice-stews"
           className="relative bg-gradient-to-r from-[#1F1D1B] via-[#2D2A27] to-[#33302C] text-white rounded-3xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-all flex items-center justify-between group overflow-hidden"
         >
           <div className="space-y-1 max-w-[80%] z-10">
             <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug">
-              All Nigerian Dishes
+              Rice & Stews
             </h2>
             <p className="text-xs text-white/85 font-medium leading-normal line-clamp-1">
-              Party Jollof, Suya, Egusi, Fried Rice & Soups
+              Smoky Party Jollof, Ofada Rice & Ayamase Stew
             </p>
           </div>
-
           <Utensils className="w-8 h-8 text-white/85 group-hover:text-white group-hover:scale-110 transition-all shrink-0 ml-3 z-10" />
+        </Link>
+
+        {/* 3. Grills & Suya */}
+        <Link
+          href="/categories/grills-chops"
+          className="relative bg-gradient-to-r from-[#E8734A] via-[#F28E6B] to-[#E8734A] text-white rounded-3xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-all flex items-center justify-between group overflow-hidden"
+        >
+          <div className="space-y-1 max-w-[80%] z-10">
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug">
+              Grills & Suya
+            </h2>
+            <p className="text-xs text-white/85 font-medium leading-normal line-clamp-1">
+              Spicy Beef Suya, Peppered Goat Meat (Asun) & Night Chops
+            </p>
+          </div>
+          <Flame className="w-8 h-8 text-white/85 group-hover:text-white group-hover:scale-110 transition-all shrink-0 ml-3 z-10" />
+        </Link>
+
+        {/* 4. Bakery & Snacks */}
+        <Link
+          href="/categories/snacks-breakfast"
+          className="relative bg-gradient-to-r from-[#3A3530] via-[#2D2A27] to-[#1F1D1B] text-white rounded-3xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-all flex items-center justify-between group overflow-hidden"
+        >
+          <div className="space-y-1 max-w-[80%] z-10">
+            <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight leading-snug">
+              Bakery & Snacks
+            </h2>
+            <p className="text-xs text-white/85 font-medium leading-normal line-clamp-1">
+              Chin Chin, Puff-Puff, Beef Meat Pie & Beans Moi Moi
+            </p>
+          </div>
+          <Cookie className="w-8 h-8 text-white/85 group-hover:text-white group-hover:scale-110 transition-all shrink-0 ml-3 z-10" />
         </Link>
       </div>
 

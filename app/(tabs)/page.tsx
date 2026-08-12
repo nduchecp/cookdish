@@ -13,7 +13,6 @@ import {
   Soup,
   Utensils,
   Cookie,
-  Globe,
   Layers,
 } from "lucide-react";
 import { useState, useEffect } from "react";
@@ -25,8 +24,7 @@ const FILTER_TABS = [
   { name: "Soups & Swallows", filter: "Soups", icon: Soup },
   { name: "Rice & Stews", filter: "Rice & Stews", icon: Utensils },
   { name: "Grills & Suya", filter: "Grills & Chops", icon: Flame },
-  { name: "Snacks & Breakfast", filter: "Snacks", icon: Cookie },
-  { name: "International", filter: "International", icon: Globe },
+  { name: "Bakery & Snacks", filter: "Snacks", icon: Cookie },
 ];
 
 export default function HomeFeed() {
@@ -64,7 +62,7 @@ export default function HomeFeed() {
     }
   };
 
-  // Robust category filtering (works instantly on mobile and desktop)
+  // Category filtering matching seeded data groupings
   const traditionalSoups = allRecipes.filter(
     (r) =>
       r.category === "Nigerian Soups" ||
@@ -97,7 +95,7 @@ export default function HomeFeed() {
       r.title.toLowerCase().includes("peppered")
   );
 
-  const snacksAndBreakfast = allRecipes.filter(
+  const snacksAndBakery = allRecipes.filter(
     (r) =>
       r.category === "Nigerian Bakery & Snacks" ||
       r.category === "Nigerian Snacks & Breakfast" ||
@@ -110,17 +108,12 @@ export default function HomeFeed() {
       r.title.toLowerCase().includes("ewa")
   );
 
-  const internationalRecipes = allRecipes.filter(
-    (r) => r.source !== "user" && r.area !== "Nigerian"
-  );
-
   // Return active filtered recipes list
   const getActiveRecipes = () => {
     if (activeFilter === "Soups") return traditionalSoups.length > 0 ? traditionalSoups : allRecipes;
     if (activeFilter === "Rice & Stews") return riceDishes.length > 0 ? riceDishes : allRecipes;
     if (activeFilter === "Grills & Chops") return grillsAndChops.length > 0 ? grillsAndChops : allRecipes;
-    if (activeFilter === "Snacks") return snacksAndBreakfast.length > 0 ? snacksAndBreakfast : allRecipes;
-    if (activeFilter === "International") return internationalRecipes.length > 0 ? internationalRecipes : allRecipes;
+    if (activeFilter === "Snacks") return snacksAndBakery.length > 0 ? snacksAndBakery : allRecipes;
     return allRecipes;
   };
 
@@ -319,7 +312,7 @@ function RecipeCard({
           href={`/recipe/${recipe.source}/${recipe.id}/cook`}
           className="bg-[#FDF6EF] border border-[#EFE6DD] hover:border-[#E8734A] hover:bg-[#E8734A] hover:text-white text-[#1F1D1B] font-bold px-3.5 py-1.5 rounded-xl transition-all flex items-center gap-1"
         >
-          <span>Cook</span>
+          <span>Start Cooking</span>
           <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>

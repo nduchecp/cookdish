@@ -23,9 +23,12 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Ground Egusi (Melon Seeds)", amount: "2 cups" },
       { name: "Red Palm Oil", amount: "1/2 cup" },
       { name: "Chopped Spinach / Ugu Leaves", amount: "3 cups" },
-      { name: "Smoked Catfish & Stockfish", amount: "1 cup each" },
-      { name: "Seasoned Beef & Stock", amount: "500g beef, 3 cups broth" },
-      { name: "Ground Crayfish & Pepper", amount: "3 tbsp crayfish, 2 rodo" }
+      { name: "Smoked Catfish", amount: "1 cup" },
+      { name: "Stockfish", amount: "1 cup" },
+      { name: "Seasoned Beef", amount: "500g" },
+      { name: "Beef Stock", amount: "3 cups" },
+      { name: "Ground Crayfish", amount: "3 tbsp" },
+      { name: "Scotch Bonnet Peppers (Rodo)", amount: "2" }
     ],
     prepTimeMinutes: 20,
     cookTimeMinutes: 35,
@@ -54,8 +57,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Cocoyam Paste (Thickener)", amount: "8 medium tubers" },
       { name: "Red Palm Oil", amount: "1/2 cup" },
       { name: "Ogiri Igbo (Fermented castor seed)", amount: "1 tsp" },
-      { name: "Smoked Catfish & Stockfish", amount: "1 cup each" },
-      { name: "Yellow Habanero & Crayfish", amount: "2 peppers, 3 tbsp crayfish" }
+      { name: "Smoked Catfish", amount: "1 cup" },
+      { name: "Stockfish", amount: "1 cup" },
+      { name: "Yellow Habanero Peppers", amount: "2" },
+      { name: "Ground Crayfish", amount: "3 tbsp" }
     ],
     prepTimeMinutes: 25,
     cookTimeMinutes: 40,
@@ -82,9 +87,12 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ingredients: [
       { name: "Ground Ogbono Powder", amount: "1/2 cup" },
       { name: "Red Palm Oil", amount: "1/3 cup" },
-      { name: "Smoked Catfish & Prawns", amount: "1 cup fish, 1/2 cup prawns" },
-      { name: "Meat Stock & Crayfish", amount: "3 cups stock, 2 tbsp crayfish" },
-      { name: "Scotch Bonnet Pepper & Salt", amount: "2 rodo, 1 tsp salt" }
+      { name: "Smoked Catfish", amount: "1 cup" },
+      { name: "Dried Prawns", amount: "1/2 cup" },
+      { name: "Meat Stock", amount: "3 cups" },
+      { name: "Ground Crayfish", amount: "2 tbsp" },
+      { name: "Scotch Bonnet Peppers (Rodo)", amount: "2" },
+      { name: "Salt", amount: "1 tsp" }
     ],
     prepTimeMinutes: 15,
     cookTimeMinutes: 25,
@@ -111,9 +119,12 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ingredients: [
       { name: "Fresh Green Okra", amount: "400g" },
       { name: "Red Palm Oil", amount: "1/3 cup" },
-      { name: "Smoked Catfish & Stockfish", amount: "1 cup fish, 1 cup stockfish" },
-      { name: "Assorted Beef & Shaki", amount: "500g" },
-      { name: "Ground Crayfish & Rodo", amount: "3 tbsp crayfish, 2 rodo" }
+      { name: "Smoked Catfish", amount: "1 cup" },
+      { name: "Stockfish", amount: "1 cup" },
+      { name: "Assorted Beef", amount: "300g" },
+      { name: "Cow Tripe (Shaki)", amount: "200g" },
+      { name: "Ground Crayfish", amount: "3 tbsp" },
+      { name: "Scotch Bonnet Peppers (Rodo)", amount: "2" }
     ],
     prepTimeMinutes: 15,
     cookTimeMinutes: 20,
@@ -168,11 +179,13 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ],
     ingredients: [
       { name: "Long-Grain Parboiled Rice", amount: "4 cups" },
-      { name: "Tatashe (Red Bell Peppers)", amount: "5 large" },
-      { name: "Scotch Bonnet Peppers", amount: "3 medium" },
+      { name: "Tatashe Red Bell Peppers", amount: "5 large" },
+      { name: "Scotch Bonnet Peppers (Rodo)", amount: "3 medium" },
       { name: "Tomato Paste", amount: "100g" },
       { name: "Seasoned Chicken Stock", amount: "3.5 cups" },
-      { name: "Curry, Thyme & Bay Leaves", amount: "1 tbsp curry, 1 tbsp thyme, 3 bay leaves" }
+      { name: "Curry Powder", amount: "1 tbsp" },
+      { name: "Dried Thyme", amount: "1 tbsp" },
+      { name: "Bay Leaves", amount: "3" }
     ],
     prepTimeMinutes: 20,
     cookTimeMinutes: 45,
@@ -198,10 +211,13 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ],
     ingredients: [
       { name: "Local Ofada Rice", amount: "3 cups" },
-      { name: "Green Bell Peppers & Rodo", amount: "6 green peppers, 3 green rodo" },
+      { name: "Green Bell Peppers", amount: "6" },
+      { name: "Green Scotch Bonnet Peppers (Rodo)", amount: "3" },
       { name: "Red Palm Oil (Bleached)", amount: "1 cup" },
       { name: "Iru (Locust Beans)", amount: "2 tbsp" },
-      { name: "Boiled Eggs, Ponmo & Shaki", amount: "4 eggs, 200g ponmo, 200g shaki" }
+      { name: "Boiled Eggs", amount: "4" },
+      { name: "Cow Skin (Ponmo)", amount: "200g" },
+      { name: "Cow Tripe (Shaki)", amount: "200g" }
     ],
     prepTimeMinutes: 25,
     cookTimeMinutes: 45,
@@ -231,7 +247,8 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       { name: "Flank Steak / Beef Sirloin", amount: "600g" },
       { name: "Suya Yaji Spice Mix", amount: "1/2 cup" },
       { name: "Vegetable Oil", amount: "3 tbsp" },
-      { name: "Red Onions & Tomatoes", amount: "2 onions, 2 tomatoes" }
+      { name: "Red Onions", amount: "2" },
+      { name: "Fresh Tomatoes", amount: "2" }
     ],
     prepTimeMinutes: 20,
     cookTimeMinutes: 15,
@@ -256,9 +273,11 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ],
     ingredients: [
       { name: "Goat Meat (Bone-in)", amount: "1kg" },
-      { name: "Scotch Bonnet Peppers", amount: "6 rodo" },
-      { name: "Red Onions & Garlic", amount: "2 onions, 4 cloves garlic" },
-      { name: "Vegetable Oil & Seasoning", amount: "3 tbsp oil, 2 stock cubes" }
+      { name: "Scotch Bonnet Peppers (Rodo)", amount: "6" },
+      { name: "Red Onions", amount: "2" },
+      { name: "Garlic Cloves", amount: "4 cloves" },
+      { name: "Vegetable Oil", amount: "3 tbsp" },
+      { name: "Seasoning Cubes", amount: "2 cubes" }
     ],
     prepTimeMinutes: 20,
     cookTimeMinutes: 40,
@@ -286,8 +305,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ingredients: [
       { name: "Fresh Yellow Corn / Sweetcorn", amount: "4 cups" },
       { name: "Red Palm Oil", amount: "1/2 cup" },
-      { name: "Tatashe & Scotch Bonnet Peppers", amount: "3 tatashe, 2 rodo" },
-      { name: "Ground Crayfish & Smoked Fish", amount: "3 tbsp crayfish, 1 cup fish" }
+      { name: "Tatashe Red Bell Peppers", amount: "3" },
+      { name: "Scotch Bonnet Peppers (Rodo)", amount: "2" },
+      { name: "Ground Crayfish", amount: "3 tbsp" },
+      { name: "Smoked Catfish", amount: "1 cup" }
     ],
     prepTimeMinutes: 20,
     cookTimeMinutes: 45,
@@ -313,7 +334,8 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ingredients: [
       { name: "All-Purpose Flour", amount: "3 cups" },
       { name: "Granulated Sugar", amount: "1/2 cup" },
-      { name: "Active Dry Yeast & Nutmeg", amount: "2.5 tsp yeast, 1 tsp nutmeg" },
+      { name: "Active Dry Yeast", amount: "2.5 tsp" },
+      { name: "Ground Nutmeg", amount: "1 tsp" },
       { name: "Vegetable Oil for deep frying", amount: "4 cups" }
     ],
     prepTimeMinutes: 15,
@@ -342,8 +364,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ingredients: [
       { name: "All-Purpose Flour", amount: "4 cups" },
       { name: "Cold Unsalted Butter", amount: "100g" },
-      { name: "Granulated Sugar & Nutmeg", amount: "1/2 cup sugar, 1 tsp nutmeg" },
-      { name: "Evaporated Milk & Egg", amount: "1/2 cup milk, 1 egg" },
+      { name: "Granulated Sugar", amount: "1/2 cup" },
+      { name: "Ground Nutmeg", amount: "1 tsp" },
+      { name: "Evaporated Milk", amount: "1/2 cup" },
+      { name: "Egg", amount: "1" },
       { name: "Vegetable Oil for frying", amount: "4 cups" }
     ],
     prepTimeMinutes: 25,
@@ -370,10 +394,14 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
       "Crimp edges firmly with a fork, prick top for steam, brush with egg wash, and bake at 180°C (350°F) for 30-35 minutes until deep golden."
     ],
     ingredients: [
-      { name: "All-Purpose Flour & Cold Butter", amount: "500g flour, 250g butter" },
+      { name: "All-Purpose Flour", amount: "500g" },
+      { name: "Cold Unsalted Butter", amount: "250g" },
       { name: "Minced Beef (Ground Sirloin)", amount: "400g" },
-      { name: "Diced Irish Potatoes & Carrots", amount: "1 large potato, 1 carrot" },
-      { name: "Curry Powder, Thyme & Garlic", amount: "1 tbsp curry, 1 tsp thyme, 2 garlic" },
+      { name: "Irish Potatoes", amount: "1 large" },
+      { name: "Carrots", amount: "1 large" },
+      { name: "Curry Powder", amount: "1 tbsp" },
+      { name: "Dried Thyme", amount: "1 tsp" },
+      { name: "Garlic Cloves", amount: "2 cloves" },
       { name: "Egg Wash (for glazing)", amount: "1 egg beaten" }
     ],
     prepTimeMinutes: 35,
@@ -398,8 +426,10 @@ export const NIGERIAN_LOCAL_DISHES: NormalizedRecipe[] = [
     ],
     ingredients: [
       { name: "Peeled Black-Eyed Beans", amount: "3 cups" },
-      { name: "Tatashe Peppers & Crayfish", amount: "4 tatashe, 3 tbsp crayfish" },
-      { name: "Vegetable Oil & Boiled Eggs", amount: "3/4 cup oil, 3 eggs" }
+      { name: "Tatashe Red Bell Peppers", amount: "4" },
+      { name: "Ground Crayfish", amount: "3 tbsp" },
+      { name: "Vegetable Oil", amount: "3/4 cup" },
+      { name: "Boiled Eggs", amount: "3" }
     ],
     prepTimeMinutes: 30,
     cookTimeMinutes: 50,

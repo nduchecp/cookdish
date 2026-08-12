@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Heart, Play, Clock, Users, CheckCircle2, Video, Sparkles, ChefHat } from "lucide-react";
+import { ArrowLeft, Heart, Play, Clock, Users, CheckCircle2, Video } from "lucide-react";
 import { NormalizedRecipe } from "@/lib/api/themealdb";
 
 interface RecipeClientViewProps {
@@ -63,7 +63,7 @@ export default function RecipeClientView({ recipe, source, id }: RecipeClientVie
                 {recipe.title}
               </h1>
               <p className="text-xs sm:text-sm text-white/90 font-medium">
-                Category: {recipe.category} • Source: {recipe.source.toUpperCase()}
+                Category: {recipe.category}
               </p>
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function RecipeClientView({ recipe, source, id }: RecipeClientVie
               className="flex-1 md:flex-none bg-[#E8734A] text-white px-6 py-3.5 rounded-2xl font-bold hover:bg-[#D66239] transition-all flex items-center justify-center gap-2 shadow-xs text-sm"
             >
               <Play className="w-4 h-4 fill-white" />
-              <span>Start Interactive Cooking</span>
+              <span>Start Cooking</span>
             </Link>
           </div>
         </div>
