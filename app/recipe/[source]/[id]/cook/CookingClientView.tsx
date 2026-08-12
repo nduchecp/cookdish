@@ -2,7 +2,19 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowLeft, ChevronLeft, ChevronRight, Play, Pause, CheckCircle, Lightbulb, Clock, RotateCcw } from "lucide-react";
+import {
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  CheckCircle,
+  Lightbulb,
+  Clock,
+  RotateCcw,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { NormalizedRecipe } from "@/lib/api/themealdb";
 
 interface CookingClientViewProps {
@@ -27,11 +39,20 @@ export function parseStepText(step: string) {
   };
 }
 
+export function extractMinutesFromStep(step: string): number {
+  const match = step.match(/\((\d+)\s*(?:-\s*\d+)?\s*mins?\)/i);
+  if (match && match[1]) {
+    const mins = parseInt(match[1], 10);
+    if (!isNaN(mins) && mins > 0) return mins;
+  }
+  return 5; // Default 5 mins if no duration specified
+}
+
 export default function CookingClientView({ recipe, source, id }: CookingClientViewProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [timerSeconds, setTimerSeconds] = useState(300); // 5 mins step timer
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
 
   const steps = recipe.instructions && recipe.instructions.length > 0
     ? recipe.instructions
@@ -45,6 +66,21 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
   const totalSteps = steps.length;
   const currentInstruction = steps[currentStep];
   const parsedStep = parseStepText(currentInstruction);
+  const stepDurationMins = extractMinutesFromStep(currentInstruction);
+
+  // Dynamic Timer Initial State synchronized to step's real duration
+  const [timerSeconds, setTimerSeconds] = useState(stepDurationMins * 60);
+
+  // Synchronize timer when step changes
+  useEffect(() => {
+    const mins = extractMinutesFromStep(steps[currentStep]);
+    setTimerSeconds(mins * 60);
+    setIsTimerRunning(false);
+
+    if (isVoiceEnabled) {
+      speakStep(steps[currentStep], currentStep + 1);
+    }
+  }, [currentStep]);
 
   // Guaranteed React Timer Countdown Effect (Dependency: isTimerRunning ONLY)
   useEffect(() => {
@@ -54,6 +90,7 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
       setTimerSeconds((prev) => {
         if (prev <= 1) {
           setIsTimerRunning(false);
+          playTimerAlarm();
           return 0;
         }
         return prev - 1;
@@ -62,6 +99,43 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
 
     return () => clearInterval(interval);
   }, [isTimerRunning]);
+
+  // Speech Synthesis Voice Assistant
+  const speakStep = (stepText: string, stepNum: number) => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      window.speechSynthesis.cancel(); // Stop active speech
+      const parsed = parseStepText(stepText);
+      const textToSpeak = parsed.title
+        ? `Step ${stepNum}: ${parsed.title}. ${parsed.body}`
+        : `Step ${stepNum}: ${parsed.body}`;
+
+      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const playTimerAlarm = () => {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      const alarmText = `Timer complete for step ${currentStep + 1}! Check your cooking.`;
+      const utterance = new SpeechSynthesisUtterance(alarmText);
+      utterance.rate = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const toggleVoiceMode = () => {
+    if (!isVoiceEnabled) {
+      setIsVoiceEnabled(true);
+      speakStep(currentInstruction, currentStep + 1);
+    } else {
+      setIsVoiceEnabled(false);
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+  };
 
   const formatTime = (totalSec: number) => {
     const mins = Math.floor(totalSec / 60);
@@ -72,20 +146,19 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
   const handleNextStep = () => {
     if (currentStep < totalSteps - 1) {
       setCurrentStep((prev) => prev + 1);
-      setIsTimerRunning(false);
-      setTimerSeconds(300);
       const mainContainer = document.getElementById("cook-scroll-container");
       if (mainContainer) mainContainer.scrollTop = 0;
     } else {
       setIsFinished(true);
+      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
     }
   };
 
   const handlePrevStep = () => {
     if (currentStep > 0) {
       setCurrentStep((prev) => prev - 1);
-      setIsTimerRunning(false);
-      setTimerSeconds(300);
       const mainContainer = document.getElementById("cook-scroll-container");
       if (mainContainer) mainContainer.scrollTop = 0;
     }
@@ -97,7 +170,7 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
 
   const handleResetTimer = () => {
     setIsTimerRunning(false);
-    setTimerSeconds(300);
+    setTimerSeconds(stepDurationMins * 60);
   };
 
   if (isFinished) {
@@ -134,7 +207,7 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
   return (
     <div
       id="cook-scroll-container"
-      className="fixed inset-0 z-[100] bg-[#1F1D1B] text-white flex flex-col justify-between overflow-y-auto touch-manipulation pb-24"
+      className="fixed inset-0 z-[100] bg-[#FDF6EF] text-[#1F1D1B] flex flex-col justify-between overflow-y-auto touch-manipulation pb-28"
     >
       {/* Scrollable Content Wrapper */}
       <div className="p-4 sm:p-6 space-y-6 max-w-3xl mx-auto w-full flex-1 flex flex-col">
@@ -142,23 +215,36 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
         <div className="flex justify-between items-center w-full pt-2">
           <Link
             href={`/recipe/${source}/${id}`}
-            className="p-3 rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors border border-white/10 active:scale-95 touch-manipulation"
+            className="p-3 rounded-2xl bg-white border border-[#EFE6DD] text-[#1F1D1B] hover:border-[#E8734A] transition-colors shadow-xs active:scale-95 touch-manipulation"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
           <div className="text-center px-4">
-            <span className="text-xs font-extrabold text-[#E8734A] uppercase tracking-wider block truncate max-w-[200px] sm:max-w-xs">
+            <span className="text-xs font-extrabold text-[#E8734A] uppercase tracking-wider block truncate max-w-[180px] sm:max-w-xs">
               {recipe.title}
             </span>
-            <h2 className="text-xs font-semibold text-white/70">
+            <h2 className="text-xs font-semibold text-[#6E6B68]">
               Step {currentStep + 1} of {totalSteps}
             </h2>
           </div>
-          <div className="w-10" />
+
+          {/* Hands-Free Voice Assistant Toggle Button */}
+          <button
+            type="button"
+            onClick={toggleVoiceMode}
+            className={`p-3 rounded-2xl border transition-all shadow-xs flex items-center gap-1.5 cursor-pointer touch-manipulation ${
+              isVoiceEnabled
+                ? "bg-[#E8734A] text-white border-[#E8734A] animate-pulse"
+                : "bg-white border-[#EFE6DD] text-[#1F1D1B] hover:border-[#E8734A]"
+            }`}
+            title={isVoiceEnabled ? "Hands-Free Voice On" : "Turn Voice Assistant On"}
+          >
+            {isVoiceEnabled ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5 text-[#6E6B68]" />}
+          </button>
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full bg-white/10 h-2.5 rounded-full overflow-hidden">
+        <div className="w-full bg-[#EFE6DD] h-2.5 rounded-full overflow-hidden">
           <div
             className="bg-[#E8734A] h-full transition-all duration-300 rounded-full"
             style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
@@ -166,60 +252,72 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
         </div>
 
         {/* Step Image Thumbnail */}
-        <div className="relative h-48 sm:h-64 w-full rounded-3xl overflow-hidden border border-white/10 shadow-lg bg-black/40 shrink-0">
+        <div className="relative h-48 sm:h-60 w-full rounded-3xl overflow-hidden border border-[#EFE6DD] shadow-sm bg-[#F3EAE1] shrink-0">
           <img
             src={recipe.image}
             alt={recipe.title}
-            className="w-full h-full object-cover opacity-90"
+            className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-5">
-            <span className="text-xs font-bold uppercase tracking-wider bg-[#E8734A] px-3 py-1 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-wider bg-[#E8734A] text-white px-3.5 py-1 rounded-full shadow-xs">
               Step {currentStep + 1} Instructions
             </span>
           </div>
         </div>
 
-        {/* Step Card Text with Separated Title & Time Header */}
-        <div className="bg-white/5 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-5 backdrop-blur-md flex-1 flex flex-col justify-between">
+        {/* Step Card Text aligned with Website Warm Theme */}
+        <div className="bg-white border border-[#EFE6DD] rounded-3xl p-6 sm:p-8 space-y-5 shadow-xs flex-1 flex flex-col justify-between">
           <div className="space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
-              <h3 className="text-xl sm:text-2xl font-extrabold text-[#E8734A]">
+            {/* Header Row: Step Title + Matching Time Pill */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#EFE6DD] pb-3.5">
+              <h3 className="text-xl sm:text-2xl font-extrabold text-[#1F1D1B]">
                 {parsedStep.title || `Step ${currentStep + 1}`}
               </h3>
               {parsedStep.time && (
-                <span className="inline-flex items-center gap-1.5 bg-[#E8734A]/20 border border-[#E8734A]/40 text-[#E8734A] text-xs font-bold px-3.5 py-1.5 rounded-full">
-                  <Clock className="w-3.5 h-3.5" />
+                <span className="inline-flex items-center gap-1.5 bg-orange-50 border border-orange-200 text-[#E8734A] text-xs font-extrabold px-3.5 py-1.5 rounded-full shadow-2xs">
+                  <Clock className="w-4 h-4" />
                   <span>{parsedStep.time}</span>
                 </span>
               )}
             </div>
 
-            <p className="text-base sm:text-xl font-medium leading-relaxed text-white/95">
+            {/* Instruction Body */}
+            <p className="text-base sm:text-xl font-medium leading-relaxed text-[#1F1D1B]">
               {parsedStep.body}
             </p>
           </div>
 
           {/* Chef Tip Callout */}
-          <div className="flex items-start gap-3 bg-[#E8734A]/10 border border-[#E8734A]/30 p-4 rounded-2xl">
+          <div className="flex items-start gap-3 bg-[#FDF6EF] border border-[#EFE6DD] p-4 rounded-2xl">
             <Lightbulb className="w-5 h-5 text-[#E8734A] shrink-0 mt-0.5" />
-            <div className="text-xs text-white/90">
+            <div className="text-xs text-[#6E6B68]">
               <span className="font-bold text-[#E8734A] block mb-0.5">Chef's Tip</span>
               Keep heat controlled and taste test seasoning before proceeding to the next step.
             </div>
           </div>
 
-          {/* Interactive Step Timer */}
-          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-white/10">
-            <div className="flex items-center gap-2 text-sm text-white/90">
+          {/* Hands-Free Voice Reader Button */}
+          <button
+            type="button"
+            onClick={() => speakStep(currentInstruction, currentStep + 1)}
+            className="w-full flex items-center justify-center gap-2 bg-[#FDF6EF] hover:bg-[#E8734A] hover:text-white border border-[#EFE6DD] text-[#1F1D1B] py-3 rounded-2xl text-xs font-bold transition-all shadow-2xs cursor-pointer active:scale-95 touch-manipulation"
+          >
+            <Volume2 className="w-4 h-4 text-[#E8734A] group-hover:text-white" />
+            <span>Read Step Aloud (Hands-Free)</span>
+          </button>
+
+          {/* Interactive Step Timer (Matched 100% to Step Duration) */}
+          <div className="pt-3 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#EFE6DD]">
+            <div className="flex items-center gap-2 text-sm text-[#1F1D1B]">
               <Clock className="w-5 h-5 text-[#E8734A]" />
-              <span className="font-bold">Step Timer: {formatTime(timerSeconds)}</span>
+              <span className="font-extrabold">Step Timer: {formatTime(timerSeconds)}</span>
             </div>
 
             <div className="flex gap-3 w-full sm:w-auto">
               <button
                 type="button"
                 onClick={handleToggleTimer}
-                className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#E8734A] text-white px-6 py-3.5 rounded-2xl font-bold hover:bg-[#D66239] active:scale-95 transition-all shadow-md text-sm cursor-pointer touch-manipulation"
+                className="flex-1 sm:flex-none flex items-center justify-center gap-2 bg-[#E8734A] text-white px-6 py-3.5 rounded-2xl font-bold hover:bg-[#D66239] active:scale-95 transition-all shadow-xs text-sm cursor-pointer touch-manipulation"
               >
                 {isTimerRunning ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 fill-white" />}
                 <span>{isTimerRunning ? "Pause Timer" : "Start Timer"}</span>
@@ -228,32 +326,33 @@ export default function CookingClientView({ recipe, source, id }: CookingClientV
                 type="button"
                 onClick={handleResetTimer}
                 aria-label="Reset Timer"
-                className="p-3.5 bg-white/10 hover:bg-white/20 active:scale-95 rounded-2xl text-white transition-all border border-white/10 cursor-pointer touch-manipulation"
+                className="p-3.5 bg-white hover:bg-[#FDF6EF] active:scale-95 rounded-2xl text-[#1F1D1B] transition-all border border-[#EFE6DD] shadow-2xs cursor-pointer touch-manipulation"
+                title={`Reset to ${stepDurationMins} mins`}
               >
-                <RotateCcw className="w-5 h-5" />
+                <RotateCcw className="w-5 h-5 text-[#6E6B68]" />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Fixed Bottom Action Controls */}
-      <div className="fixed bottom-0 left-0 right-0 w-full bg-[#1F1D1B] border-t border-white/10 p-4 sm:p-5 z-[110] shadow-2xl">
+      {/* Fixed Bottom Action Controls Aligned with App Theme */}
+      <div className="fixed bottom-0 left-0 right-0 w-full bg-white border-t border-[#EFE6DD] p-4 sm:p-5 z-[110] shadow-2xl">
         <div className="max-w-3xl mx-auto flex justify-between items-center gap-4">
           <button
             type="button"
             disabled={currentStep === 0}
             onClick={handlePrevStep}
-            className="flex-1 border border-white/20 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/10 active:scale-95 transition-all text-sm cursor-pointer bg-white/5 touch-manipulation"
+            className="flex-1 border border-[#EFE6DD] py-4 rounded-2xl font-extrabold flex items-center justify-center gap-2 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[#FDF6EF] active:scale-95 transition-all text-sm cursor-pointer bg-white text-[#1F1D1B] shadow-2xs touch-manipulation"
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-5 h-5 text-[#6E6B68]" />
             <span>Previous Step</span>
           </button>
 
           <button
             type="button"
             onClick={handleNextStep}
-            className="flex-1 bg-[#E8734A] text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-[#D66239] active:scale-95 transition-all shadow-lg text-sm cursor-pointer touch-manipulation"
+            className="flex-1 bg-[#E8734A] text-white py-4 rounded-2xl font-extrabold flex items-center justify-center gap-2 hover:bg-[#D66239] active:scale-95 transition-all shadow-md text-sm cursor-pointer touch-manipulation"
           >
             <span>{currentStep === totalSteps - 1 ? "Finish Cooking" : "Next Step"}</span>
             {currentStep === totalSteps - 1 ? (
