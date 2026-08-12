@@ -1,7 +1,9 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getUnifiedRecipeById } from "@/lib/api/recipes";
 import CookingClientView from "./CookingClientView";
+
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export default async function CookingModePage({
   params,
