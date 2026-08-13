@@ -22,6 +22,8 @@ import {
   BarChart3,
   Server,
   Layers,
+  ChevronRightIcon,
+  Home,
 } from "lucide-react";
 
 export default function AdminOverviewPage() {
@@ -129,6 +131,16 @@ export default function AdminOverviewPage() {
 
   return (
     <div className="space-y-6 sm:space-y-8 w-full">
+      {/* UX Breadcrumb Trail */}
+      <nav className="flex items-center gap-2 text-xs font-semibold text-[#6E6B68]">
+        <Link href="/admin" className="flex items-center gap-1 hover:text-[#E8734A] transition-colors">
+          <Home className="w-3.5 h-3.5" />
+          <span>Admin</span>
+        </Link>
+        <ChevronRight className="w-3.5 h-3.5 text-[#6E6B68]/60" />
+        <span className="text-[#1F1D1B] font-extrabold">Executive Overview</span>
+      </nav>
+
       {/* Top Welcome Header Bar */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-r from-[#1F1D1B] via-[#2D2A26] to-[#1F1D1B] text-white p-6 sm:p-8 rounded-3xl border border-white/10 shadow-md">
         <div className="space-y-1.5 max-w-2xl">
@@ -183,7 +195,7 @@ export default function AdminOverviewPage() {
                     <Icon className="w-6 h-6" />
                   </div>
                   <div className="flex items-center gap-1 text-[11px] font-extrabold text-[#6E6B68] bg-[#FAF8F5] px-2.5 py-1 rounded-full border border-[#EFE6DD] group-hover:border-[#E8734A]/40 transition-colors">
-                    <span>Details</span>
+                    <span>Manage</span>
                     <ArrowUpRight className="w-3.5 h-3.5 text-[#E8734A] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </div>

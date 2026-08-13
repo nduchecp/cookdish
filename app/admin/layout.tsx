@@ -22,6 +22,7 @@ import {
   X,
   Plus,
 } from "lucide-react";
+import CookDishLogo from "@/components/CookDishLogo";
 
 // TODO: gate this route once auth/roles exist (e.g. check profiles.role !== 'admin' redirect)
 
@@ -80,13 +81,11 @@ export default function AdminLayout({
     <div className="min-h-screen bg-[#FAF8F5] text-[#1F1D1B] flex flex-col md:flex-row w-full font-sans antialiased selection:bg-[#E8734A] selection:text-white">
       {/* Mobile Top Navigation Bar */}
       <div className="md:hidden bg-white border-b border-[#EFE6DD] p-4 flex items-center justify-between sticky top-0 z-40 shadow-xs">
-        <Link href="/admin" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#E8734A] to-[#F59E0B] flex items-center justify-center text-white font-extrabold text-base shadow-xs">
-            🍳
-          </div>
+        <Link href="/admin" className="flex items-center gap-3">
+          <CookDishLogo size={36} />
           <div className="flex items-center gap-1.5">
-            <span className="font-extrabold text-sm tracking-tight text-[#1F1D1B]">CookDish</span>
-            <span className="bg-[#E8734A] text-white text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md">
+            <span className="font-extrabold text-base tracking-tight text-[#1F1D1B]">CookDish</span>
+            <span className="bg-[#E8734A] text-white text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-md shadow-2xs">
               Admin
             </span>
           </div>
@@ -111,31 +110,29 @@ export default function AdminLayout({
         </div>
       </div>
 
-      {/* Admin Clean Warm Palette Sidebar */}
+      {/* Admin Clean Executive Sidebar */}
       <aside
         className={`bg-white text-[#1F1D1B] transition-all duration-300 flex flex-col justify-between z-30 shrink-0 border-r border-[#EFE6DD] shadow-xs ${
           collapsed ? "w-full md:w-20" : "w-full md:w-64"
         } ${mobileMenuOpen ? "block" : "hidden md:flex"}`}
       >
         <div>
-          {/* Sidebar Top Brand Header */}
+          {/* Sidebar Top Brand Header with Vector Logo */}
           <div className="p-4 sm:p-5 border-b border-[#EFE6DD] flex items-center justify-between">
             <Link href="/admin" className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-[#E8734A] to-[#F59E0B] flex items-center justify-center text-white shadow-sm shrink-0 font-extrabold text-xl">
-                🍳
-              </div>
+              <CookDishLogo size={40} />
               {!collapsed && (
                 <div className="min-w-0">
                   <div className="flex items-center gap-1.5">
                     <span className="font-extrabold text-base tracking-tight text-[#1F1D1B]">
                       CookDish
                     </span>
-                    <span className="bg-[#E8734A] text-white text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md tracking-wider">
+                    <span className="bg-[#E8734A] text-white text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-md tracking-wider shadow-2xs">
                       Admin
                     </span>
                   </div>
                   <span className="text-[10px] text-[#6E6B68] font-semibold block truncate pt-0.5">
-                    Culinary Control Center
+                    Executive Control Hub
                   </span>
                 </div>
               )}
@@ -258,7 +255,7 @@ export default function AdminLayout({
 
       {/* Main Administrative Workspace */}
       <div className="flex-1 flex flex-col min-w-0">
-        {/* Enterprise Top Navbar */}
+        {/* Enterprise Top Navbar with Brand Logo */}
         <header className="bg-white/90 backdrop-blur-md border-b border-[#EFE6DD] px-4 sm:px-8 py-3.5 flex items-center justify-between gap-4 sticky top-0 z-20 shadow-2xs">
           <div className="flex items-center gap-3 flex-1 max-w-md">
             <div className="relative w-full">
