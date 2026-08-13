@@ -13,6 +13,8 @@ import {
   Flame,
   CheckCircle2,
   AlertCircle,
+  Eye,
+  Sparkles,
 } from "lucide-react";
 import { NIGERIAN_LOCAL_DISHES } from "@/lib/api/recipes";
 
@@ -98,51 +100,66 @@ export default function AdminEditRecipePage({
   };
 
   return (
-    <div className="space-y-6 sm:space-y-8 w-full max-w-4xl mx-auto pb-12">
-      {/* Header Bar */}
-      <div className="flex items-center justify-between border-b border-[#EFE6DD] pb-4">
-        <div className="flex items-center gap-3">
+    <div className="space-y-6 sm:space-y-8 w-full max-w-4xl mx-auto pb-16">
+      {/* Floating Sticky Action Header */}
+      <div className="bg-white/90 backdrop-blur-md sticky top-16 z-20 p-4 sm:px-6 rounded-3xl border border-[#EFE6DD] shadow-sm flex items-center justify-between gap-4">
+        <div className="flex items-center gap-3 min-w-0">
           <Link
             href="/admin/recipes"
-            className="p-2.5 rounded-full bg-white border border-[#EFE6DD] text-[#1F1D1B] hover:border-[#E8734A] transition-colors"
+            className="p-2.5 rounded-full bg-[#FAF8F5] border border-[#EFE6DD] text-[#1F1D1B] hover:border-[#E8734A] transition-colors shrink-0"
           >
             <ArrowLeft className="w-5 h-5" />
           </Link>
-          <div>
-            <span className="text-[#E8734A] text-xs font-extrabold tracking-widest uppercase block">
-              Admin Recipe Editor
+          <div className="min-w-0">
+            <span className="text-[#E8734A] text-[10px] font-extrabold tracking-widest uppercase block">
+              Recipe Editor
             </span>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-[#1F1D1B] tracking-tight">
-              Edit Recipe: {title || "Recipe"}
+            <h1 className="text-base sm:text-lg font-extrabold text-[#1F1D1B] truncate">
+              {title || "Edit Recipe"}
             </h1>
           </div>
         </div>
 
-        <button
-          type="submit"
-          form="recipe-edit-form"
-          className="bg-[#E8734A] hover:bg-[#D66239] text-white text-xs font-extrabold px-6 py-3 rounded-2xl flex items-center gap-2 shadow-xs transition-all cursor-pointer active:scale-95 shrink-0"
-        >
-          <Save className="w-4 h-4" />
-          <span>Save Changes</span>
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            href={`/recipe/user/${id}`}
+            target="_blank"
+            className="hidden sm:inline-flex bg-[#FAF8F5] border border-[#EFE6DD] hover:border-[#E8734A] text-[#1F1D1B] text-xs font-bold px-4 py-2.5 rounded-xl transition-all items-center gap-1.5 shadow-2xs"
+          >
+            <Eye className="w-4 h-4 text-[#E8734A]" />
+            <span>Preview</span>
+          </Link>
+          <button
+            type="submit"
+            form="recipe-edit-form"
+            className="bg-[#E8734A] hover:bg-[#D66239] text-white text-xs font-extrabold px-5 py-2.5 rounded-xl flex items-center gap-1.5 shadow-xs transition-all cursor-pointer active:scale-95"
+          >
+            <Save className="w-4 h-4" />
+            <span>Save Recipe</span>
+          </button>
+        </div>
       </div>
 
       {savedSuccess && (
-        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-extrabold flex items-center gap-2 animate-in fade-in duration-200">
+        <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-extrabold flex items-center gap-2.5 animate-in fade-in duration-200 shadow-xs">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-          <span>Recipe saved successfully! Redirecting back to catalog...</span>
+          <span>Recipe modifications saved successfully! Returning to recipe list...</span>
         </div>
       )}
 
       {/* Main Edit Form */}
       <form id="recipe-edit-form" onSubmit={handleSubmit} className="space-y-6">
-        {/* Section 1: Basic Recipe Overview */}
-        <div className="bg-white rounded-3xl p-6 border border-[#EFE6DD] shadow-xs space-y-4">
-          <h3 className="text-sm font-extrabold text-[#1F1D1B] uppercase tracking-wider border-b border-[#EFE6DD] pb-3 flex items-center gap-2">
-            <ChefHat className="w-4 h-4 text-[#E8734A]" />
-            <span>General Information</span>
-          </h3>
+        {/* Section 1: General Identity & Meta */}
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#EFE6DD] shadow-xs space-y-6">
+          <div className="border-b border-[#EFE6DD] pb-4">
+            <h3 className="text-base font-extrabold text-[#1F1D1B] uppercase tracking-wider flex items-center gap-2">
+              <ChefHat className="w-5 h-5 text-[#E8734A]" />
+              <span>Recipe Identity & Metadata</span>
+            </h3>
+            <p className="text-xs text-[#6E6B68] pt-0.5">
+              Core details displayed on recipe hero cards and search filters
+            </p>
+          </div>
 
           <div className="space-y-4">
             <div>
@@ -155,7 +172,7 @@ export default function AdminEditRecipePage({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Authentic Nigerian Egusi Soup"
-                className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
               />
             </div>
 
@@ -168,7 +185,7 @@ export default function AdminEditRecipePage({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Brief summary of dish origin, key flavors, and serving suggestion..."
-                className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
               />
             </div>
 
@@ -180,7 +197,7 @@ export default function AdminEditRecipePage({
                 <select
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 >
                   <option value="Nigerian Soups">Nigerian Soups</option>
                   <option value="Nigerian Rice & Stews">Nigerian Rice & Stews</option>
@@ -199,7 +216,7 @@ export default function AdminEditRecipePage({
                   value={area}
                   onChange={(e) => setArea(e.target.value)}
                   placeholder="e.g. Nigerian, Italian, Mexican"
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
               </div>
 
@@ -210,7 +227,7 @@ export default function AdminEditRecipePage({
                 <select
                   value={difficulty}
                   onChange={(e) => setDifficulty(e.target.value)}
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 >
                   <option value="Easy">Easy</option>
                   <option value="Medium">Medium</option>
@@ -229,7 +246,7 @@ export default function AdminEditRecipePage({
                   min={1}
                   value={prepTime}
                   onChange={(e) => setPrepTime(Number(e.target.value))}
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
               </div>
 
@@ -242,7 +259,7 @@ export default function AdminEditRecipePage({
                   min={1}
                   value={cookTime}
                   onChange={(e) => setCookTime(Number(e.target.value))}
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
               </div>
 
@@ -255,63 +272,69 @@ export default function AdminEditRecipePage({
                   min={1}
                   value={servings}
                   onChange={(e) => setServings(Number(e.target.value))}
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
               </div>
             </div>
 
             <div>
               <label className="block text-xs font-bold text-[#1F1D1B] uppercase tracking-wider mb-1">
-                Image URL
+                Cover Image URL
               </label>
               <input
                 type="url"
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="https://images.unsplash.com/..."
-                className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-mono text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-mono text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
               />
             </div>
           </div>
         </div>
 
         {/* Section 2: Atomic Ingredients Checklist */}
-        <div className="bg-white rounded-3xl p-6 border border-[#EFE6DD] shadow-xs space-y-4">
-          <div className="flex justify-between items-center border-b border-[#EFE6DD] pb-3">
-            <h3 className="text-sm font-extrabold text-[#1F1D1B] uppercase tracking-wider">
-              Atomic Ingredients ({ingredients.length})
-            </h3>
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#EFE6DD] shadow-xs space-y-4">
+          <div className="flex justify-between items-center border-b border-[#EFE6DD] pb-4">
+            <div>
+              <h3 className="text-base font-extrabold text-[#1F1D1B] uppercase tracking-wider">
+                Atomic Ingredients ({ingredients.length})
+              </h3>
+              <p className="text-xs text-[#6E6B68]">
+                Must be single atomic rows with 1 ingredient per line
+              </p>
+            </div>
             <button
               type="button"
               onClick={handleAddIngredient}
-              className="text-xs font-bold text-[#E8734A] hover:underline flex items-center gap-1 cursor-pointer"
+              className="bg-[#FAF8F5] border border-[#EFE6DD] hover:border-[#E8734A] text-[#1F1D1B] text-xs font-extrabold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-4 h-4 text-[#E8734A]" />
               <span>Add Ingredient</span>
             </button>
           </div>
 
           <div className="space-y-3">
             {ingredients.map((ing, idx) => (
-              <div key={idx} className="flex gap-2 items-center">
+              <div key={idx} className="flex gap-2.5 items-center">
                 <input
                   type="text"
                   placeholder="Ingredient name (e.g. Ground Egusi)"
                   value={ing.name}
                   onChange={(e) => handleIngredientChange(idx, "name", e.target.value)}
-                  className="flex-2 bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-2.5 text-xs font-semibold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="flex-2 bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-2.5 text-xs font-semibold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
                 <input
                   type="text"
                   placeholder="Amount (e.g. 2 cups)"
                   value={ing.amount}
                   onChange={(e) => handleIngredientChange(idx, "amount", e.target.value)}
-                  className="flex-1 bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-2.5 text-xs font-semibold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="flex-1 bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-2.5 text-xs font-semibold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveIngredient(idx)}
-                  className="p-2.5 rounded-xl text-rose-500 hover:bg-rose-50 transition-colors"
+                  className="p-2.5 rounded-xl text-rose-500 hover:bg-rose-50 transition-colors cursor-pointer shrink-0"
+                  title="Remove Ingredient"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -321,25 +344,30 @@ export default function AdminEditRecipePage({
         </div>
 
         {/* Section 3: Step-by-Step Directions */}
-        <div className="bg-white rounded-3xl p-6 border border-[#EFE6DD] shadow-xs space-y-4">
-          <div className="flex justify-between items-center border-b border-[#EFE6DD] pb-3">
-            <h3 className="text-sm font-extrabold text-[#1F1D1B] uppercase tracking-wider">
-              Step-by-Step Directions ({instructions.length})
-            </h3>
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#EFE6DD] shadow-xs space-y-4">
+          <div className="flex justify-between items-center border-b border-[#EFE6DD] pb-4">
+            <div>
+              <h3 className="text-base font-extrabold text-[#1F1D1B] uppercase tracking-wider">
+                Step-by-Step Directions ({instructions.length})
+              </h3>
+              <p className="text-xs text-[#6E6B68]">
+                Format step titles with durations (e.g. 'Step Title (25 mins): Body text...')
+              </p>
+            </div>
             <button
               type="button"
               onClick={handleAddInstruction}
-              className="text-xs font-bold text-[#E8734A] hover:underline flex items-center gap-1 cursor-pointer"
+              className="bg-[#FAF8F5] border border-[#EFE6DD] hover:border-[#E8734A] text-[#1F1D1B] text-xs font-extrabold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs"
             >
-              <Plus className="w-3.5 h-3.5" />
+              <Plus className="w-4 h-4 text-[#E8734A]" />
               <span>Add Step</span>
             </button>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-4">
             {instructions.map((step, idx) => (
-              <div key={idx} className="flex gap-2 items-start">
-                <span className="w-7 h-7 rounded-full bg-[#FDF6EF] border border-[#EFE6DD] text-[#E8734A] font-extrabold text-xs flex items-center justify-center shrink-0 mt-2">
+              <div key={idx} className="flex gap-3 items-start p-3 rounded-2xl bg-[#FAF8F5] border border-[#EFE6DD]">
+                <span className="w-7 h-7 rounded-full bg-white border border-[#EFE6DD] text-[#E8734A] font-extrabold text-xs flex items-center justify-center shrink-0 mt-1 shadow-2xs">
                   {idx + 1}
                 </span>
                 <textarea
@@ -347,12 +375,13 @@ export default function AdminEditRecipePage({
                   value={step}
                   onChange={(e) => handleInstructionChange(idx, e.target.value)}
                   placeholder="Step title (X mins): Detailed instruction text..."
-                  className="flex-1 bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-2.5 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="flex-1 bg-white border border-[#EFE6DD] rounded-xl px-4 py-2.5 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
                 <button
                   type="button"
                   onClick={() => handleRemoveInstruction(idx)}
-                  className="p-2.5 rounded-xl text-rose-500 hover:bg-rose-50 transition-colors mt-1"
+                  className="p-2 rounded-xl text-rose-500 hover:bg-rose-50 transition-colors mt-1 shrink-0 cursor-pointer"
+                  title="Remove Step"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>

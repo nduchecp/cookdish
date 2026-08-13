@@ -14,6 +14,7 @@ import {
   AlertTriangle,
   Mail,
   Calendar,
+  ShieldCheck,
 } from "lucide-react";
 
 interface AdminUser {
@@ -61,8 +62,8 @@ const INITIAL_USERS: AdminUser[] = [
   },
   {
     id: "usr-4",
-    name: "Bad Actor Account",
-    email: "spam.bot@example.com",
+    name: "Spam Account",
+    email: "bot.user@example.com",
     role: "user",
     status: "suspended",
     statusReason: "Repeated spam recipe submissions.",
@@ -135,7 +136,7 @@ export default function AdminUsersPage() {
         </div>
       </div>
 
-      {/* Toolbar Search & Filter */}
+      {/* Toolbar Search & Status Filter */}
       <div className="bg-white p-4 rounded-3xl border border-[#EFE6DD] shadow-xs flex flex-col md:flex-row gap-4 items-center justify-between">
         <div className="relative w-full md:w-80">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6E6B68]" />
@@ -144,7 +145,7 @@ export default function AdminUsersPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search name, email, or role..."
-            className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+            className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
           />
         </div>
 
@@ -154,10 +155,10 @@ export default function AdminUsersPage() {
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold capitalize transition-all border ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-bold capitalize transition-all border ${
                 statusFilter === status
                   ? "bg-[#E8734A] text-white border-[#E8734A] shadow-2xs"
-                  : "bg-[#FDF6EF] text-[#6E6B68] border-[#EFE6DD] hover:text-[#1F1D1B]"
+                  : "bg-[#FAF8F5] text-[#6E6B68] border-[#EFE6DD] hover:text-[#1F1D1B]"
               }`}
             >
               {status}
@@ -166,12 +167,12 @@ export default function AdminUsersPage() {
         </div>
       </div>
 
-      {/* Users Table */}
+      {/* Enterprise Users Table */}
       <div className="bg-white rounded-3xl border border-[#EFE6DD] shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-[#FDF6EF] border-b border-[#EFE6DD] text-[#6E6B68] font-extrabold uppercase text-[10px] tracking-wider">
+              <tr className="bg-[#FAF8F5] border-b border-[#EFE6DD] text-[#6E6B68] font-extrabold uppercase text-[10px] tracking-wider">
                 <th className="py-4 px-6">User Profile</th>
                 <th className="py-4 px-4">Role</th>
                 <th className="py-4 px-4">Status</th>
@@ -182,16 +183,21 @@ export default function AdminUsersPage() {
             </thead>
             <tbody className="divide-y divide-[#EFE6DD]">
               {filteredUsers.map((user) => (
-                <tr key={user.id} className="hover:bg-[#FDF6EF]/50 transition-colors">
+                <tr key={user.id} className="hover:bg-[#FAF8F5]/50 transition-colors">
                   <td className="py-4 px-6">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-2xl bg-[#FDF6EF] border border-[#EFE6DD] flex items-center justify-center text-lg shrink-0">
+                      <div className="w-10 h-10 rounded-2xl bg-[#FAF8F5] border border-[#EFE6DD] flex items-center justify-center text-lg shrink-0 shadow-2xs">
                         {user.avatar}
                       </div>
                       <div className="min-w-0">
-                        <span className="font-extrabold text-[#1F1D1B] block text-xs truncate">
-                          {user.name}
-                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-extrabold text-[#1F1D1B] block text-xs truncate">
+                            {user.name}
+                          </span>
+                          {user.role === "admin" && (
+                            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                          )}
+                        </div>
                         <span className="text-[11px] text-[#6E6B68] block truncate">
                           {user.email}
                         </span>
@@ -249,14 +255,14 @@ export default function AdminUsersPage() {
                           <button
                             type="button"
                             onClick={() => openActionModal(user, "suspend")}
-                            className="bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 px-3 py-1.5 rounded-xl font-extrabold text-[11px] transition-colors"
+                            className="bg-amber-50 hover:bg-amber-100 text-amber-700 border border-amber-200 px-3 py-1.5 rounded-xl font-extrabold text-[11px] transition-colors cursor-pointer"
                           >
                             Suspend
                           </button>
                           <button
                             type="button"
                             onClick={() => openActionModal(user, "ban")}
-                            className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3 py-1.5 rounded-xl font-extrabold text-[11px] transition-colors"
+                            className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 px-3 py-1.5 rounded-xl font-extrabold text-[11px] transition-colors cursor-pointer"
                           >
                             Ban
                           </button>
@@ -265,9 +271,9 @@ export default function AdminUsersPage() {
                         <button
                           type="button"
                           onClick={() => openActionModal(user, "activate")}
-                          className="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 px-3.5 py-1.5 rounded-xl font-extrabold text-[11px] transition-colors"
+                          className="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 px-3.5 py-1.5 rounded-xl font-extrabold text-[11px] transition-colors cursor-pointer"
                         >
-                          Reactivate
+                          Reactivate Account
                         </button>
                       )}
                     </div>
@@ -279,40 +285,44 @@ export default function AdminUsersPage() {
         </div>
       </div>
 
-      {/* Suspend / Ban Action Modal */}
+      {/* Action Modal */}
       {selectedUser && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-md w-full p-6 space-y-4 border border-[#EFE6DD] shadow-2xl">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 space-y-5 border border-[#EFE6DD] shadow-2xl animate-in fade-in zoom-in-95 duration-200">
             <div className="flex justify-between items-center border-b border-[#EFE6DD] pb-3">
-              <h3 className="text-base font-extrabold text-[#1F1D1B] capitalize">
-                {actionType} User: {selectedUser.name}
+              <h3 className="text-lg font-extrabold text-[#1F1D1B] capitalize">
+                {actionType} User Account
               </h3>
               <button
                 type="button"
                 onClick={() => setSelectedUser(null)}
-                className="p-1 text-[#6E6B68] hover:text-[#1F1D1B]"
+                className="p-1.5 text-[#6E6B68] hover:text-[#1F1D1B] rounded-xl hover:bg-[#FAF8F5]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
+            <p className="text-xs text-[#6E6B68]">
+              Target Account: <strong className="text-[#1F1D1B]">{selectedUser.name} ({selectedUser.email})</strong>
+            </p>
+
             {actionType !== "activate" ? (
-              <div>
-                <label className="block text-xs font-bold text-[#1F1D1B] uppercase tracking-wider mb-1">
-                  Reason for {actionType} *
+              <div className="space-y-2">
+                <label className="block text-xs font-extrabold text-[#1F1D1B] uppercase tracking-wider">
+                  Mandatory Reason for {actionType} *
                 </label>
                 <textarea
                   rows={3}
                   required
                   value={reasonInput}
                   onChange={(e) => setReasonInput(e.target.value)}
-                  placeholder="Specify violation reason (e.g. repeated spam, offensive content)..."
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl p-3 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  placeholder="Specify violation reason (e.g. repeated spam, offensive content, copyright infringement)..."
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl p-3.5 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
               </div>
             ) : (
-              <p className="text-xs text-[#6E6B68]">
-                Are you sure you want to reactivate <strong>{selectedUser.name}</strong>'s account?
+              <p className="text-xs text-[#6E6B68] bg-emerald-50 p-4 rounded-2xl border border-emerald-200">
+                Are you sure you want to restore full platform access for <strong>{selectedUser.name}</strong>?
               </p>
             )}
 
@@ -320,14 +330,14 @@ export default function AdminUsersPage() {
               <button
                 type="button"
                 onClick={() => setSelectedUser(null)}
-                className="flex-1 bg-[#FDF6EF] border border-[#EFE6DD] text-[#1F1D1B] text-xs font-bold py-3 rounded-2xl"
+                className="flex-1 bg-[#FAF8F5] border border-[#EFE6DD] text-[#1F1D1B] text-xs font-bold py-3.5 rounded-2xl hover:bg-gray-100"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={handleConfirmAction}
-                className={`flex-1 text-white text-xs font-bold py-3 rounded-2xl shadow-xs capitalize ${
+                className={`flex-1 text-white text-xs font-extrabold py-3.5 rounded-2xl shadow-xs capitalize cursor-pointer active:scale-95 ${
                   actionType === "activate"
                     ? "bg-emerald-600 hover:bg-emerald-700"
                     : actionType === "suspend"

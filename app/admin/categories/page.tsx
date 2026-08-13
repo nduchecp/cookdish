@@ -17,6 +17,9 @@ import {
   X,
   Layers,
   AlertTriangle,
+  ExternalLink,
+  Grid,
+  List,
 } from "lucide-react";
 
 interface CategoryItem {
@@ -26,6 +29,7 @@ interface CategoryItem {
   description: string;
   recipeCount: number;
   iconName: string;
+  color: string;
 }
 
 const INITIAL_CATEGORIES: CategoryItem[] = [
@@ -36,6 +40,7 @@ const INITIAL_CATEGORIES: CategoryItem[] = [
     description: "Traditional Nigerian heritage soups (Oha, Egusi, Ogbono, Okra) paired with Pounded Yam & Swallow.",
     recipeCount: 5,
     iconName: "Soup",
+    color: "from-[#E8734A] to-[#D66239]",
   },
   {
     id: "cat-rice",
@@ -44,14 +49,16 @@ const INITIAL_CATEGORIES: CategoryItem[] = [
     description: "Smoky Party Jollof Rice, Ofada Rice with Ayamase Stew, and spicy fried rice delicacies.",
     recipeCount: 3,
     iconName: "Utensils",
+    color: "from-[#1F1D1B] to-[#33302C]",
   },
   {
     id: "cat-grills",
     name: "Grills & Suya",
     slug: "grills-chops",
-    description: "Night market spicy beef suya skewers, peppered goat meat (asun), and grilled chops.",
+    description: "Night market spicy beef suya skewers, peppered goat meat (asun), and night chops.",
     recipeCount: 2,
     iconName: "Flame",
+    color: "from-[#E8734A] to-[#F28E6B]",
   },
   {
     id: "cat-snacks",
@@ -60,6 +67,7 @@ const INITIAL_CATEGORIES: CategoryItem[] = [
     description: "Crunchy chin chin, golden puff-puff, savory beef meat pies, and steamed corn & bean moi moi.",
     recipeCount: 3,
     iconName: "Cookie",
+    color: "from-[#3A3530] to-[#1F1D1B]",
   },
   {
     id: "cat-international",
@@ -68,12 +76,14 @@ const INITIAL_CATEGORIES: CategoryItem[] = [
     description: "Global classics including Italian Pasta Carbonara, Japanese Chicken Teriyaki Bowls & Mexican Beef Tacos.",
     recipeCount: 3,
     iconName: "Globe",
+    color: "from-[#2563EB] to-[#1D4ED8]",
   },
 ];
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<CategoryItem[]>(INITIAL_CATEGORIES);
   const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "table">("grid");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<CategoryItem | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -109,7 +119,6 @@ export default function AdminCategoriesPage() {
     const generatedSlug = formSlug.trim() || formName.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
     if (editingCategory) {
-      // Edit existing
       setCategories((prev) =>
         prev.map((c) =>
           c.id === editingCategory.id
@@ -124,7 +133,6 @@ export default function AdminCategoriesPage() {
         )
       );
     } else {
-      // Create new
       const newCat: CategoryItem = {
         id: `cat-${Date.now()}`,
         name: formName.trim(),
@@ -132,6 +140,7 @@ export default function AdminCategoriesPage() {
         description: formDescription.trim(),
         recipeCount: 0,
         iconName: formIcon,
+        color: "from-[#E8734A] to-[#F28E6B]",
       };
       setCategories((prev) => [...prev, newCat]);
     }
@@ -158,7 +167,7 @@ export default function AdminCategoriesPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <span className="text-[#E8734A] text-xs font-extrabold tracking-widest uppercase block">
-            Taxonomy Management
+            Taxonomy Supervision
           </span>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-[#1F1D1B] tracking-tight">
             Recipe Categories ({categories.length})
@@ -174,11 +183,11 @@ export default function AdminCategoriesPage() {
           className="bg-[#E8734A] hover:bg-[#D66239] text-white text-xs font-extrabold px-5 py-3 rounded-2xl flex items-center gap-2 shadow-xs transition-all active:scale-95 cursor-pointer shrink-0"
         >
           <Plus className="w-4 h-4" />
-          <span>Create New Category</span>
+          <span>Create Category</span>
         </button>
       </div>
 
-      {/* Search Input Bar */}
+      {/* Toolbar Search & View Toggle */}
       <div className="bg-white p-4 rounded-3xl border border-[#EFE6DD] shadow-xs flex flex-col sm:flex-row gap-3 items-center justify-between">
         <div className="relative w-full sm:w-80">
           <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#6E6B68]" />
@@ -186,84 +195,173 @@ export default function AdminCategoriesPage() {
             type="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Filter categories..."
-            className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+            placeholder="Filter categories by name or slug..."
+            className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl pl-10 pr-4 py-2.5 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
           />
         </div>
 
-        <span className="text-xs font-bold text-[#6E6B68]">
-          Showing {filteredCategories.length} of {categories.length} categories
-        </span>
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <span className="text-xs font-bold text-[#6E6B68]">
+            Showing {filteredCategories.length} categories
+          </span>
+
+          <div className="flex bg-[#FAF8F5] p-1 rounded-xl border border-[#EFE6DD]">
+            <button
+              type="button"
+              onClick={() => setViewMode("grid")}
+              className={`p-2 rounded-lg text-xs font-bold transition-all ${
+                viewMode === "grid"
+                  ? "bg-white text-[#E8734A] shadow-2xs"
+                  : "text-[#6E6B68] hover:text-[#1F1D1B]"
+              }`}
+              title="Grid View"
+            >
+              <Grid className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("table")}
+              className={`p-2 rounded-lg text-xs font-bold transition-all ${
+                viewMode === "table"
+                  ? "bg-white text-[#E8734A] shadow-2xs"
+                  : "text-[#6E6B68] hover:text-[#1F1D1B]"
+              }`}
+              title="Table View"
+            >
+              <List className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Categories Table / Cards View */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {filteredCategories.map((cat) => (
-          <div
-            key={cat.id}
-            className="bg-white rounded-3xl p-6 border border-[#EFE6DD] shadow-xs hover:shadow-md transition-all flex flex-col justify-between space-y-4 group"
-          >
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="w-10 h-10 rounded-2xl bg-[#FDF6EF] text-[#E8734A] flex items-center justify-center border border-[#EFE6DD] group-hover:bg-[#E8734A] group-hover:text-white transition-colors">
-                  {cat.iconName === "Soup" && <Soup className="w-5 h-5" />}
-                  {cat.iconName === "Utensils" && <Utensils className="w-5 h-5" />}
-                  {cat.iconName === "Flame" && <Flame className="w-5 h-5" />}
-                  {cat.iconName === "Cookie" && <Cookie className="w-5 h-5" />}
-                  {cat.iconName === "Globe" && <Globe className="w-5 h-5" />}
-                  {cat.iconName === "Layers" && <Layers className="w-5 h-5" />}
+      {/* Grid View */}
+      {viewMode === "grid" ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCategories.map((cat) => (
+            <div
+              key={cat.id}
+              className="bg-white rounded-3xl overflow-hidden border border-[#EFE6DD] shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+            >
+              <div>
+                {/* Category Header Card Banner */}
+                <div className={`bg-gradient-to-r ${cat.color} p-6 text-white flex justify-between items-start relative overflow-hidden`}>
+                  <div className="space-y-1 relative z-10">
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full inline-block">
+                      /{cat.slug}
+                    </span>
+                    <h3 className="text-xl font-extrabold text-white">
+                      {cat.name}
+                    </h3>
+                  </div>
+
+                  <div className="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur-md text-white flex items-center justify-center shrink-0 border border-white/20 relative z-10 shadow-xs">
+                    {cat.iconName === "Soup" && <Soup className="w-5 h-5" />}
+                    {cat.iconName === "Utensils" && <Utensils className="w-5 h-5" />}
+                    {cat.iconName === "Flame" && <Flame className="w-5 h-5" />}
+                    {cat.iconName === "Cookie" && <Cookie className="w-5 h-5" />}
+                    {cat.iconName === "Globe" && <Globe className="w-5 h-5" />}
+                    {cat.iconName === "Layers" && <Layers className="w-5 h-5" />}
+                  </div>
                 </div>
 
-                <span className="text-xs font-extrabold text-[#1F1D1B] bg-[#FDF6EF] border border-[#EFE6DD] px-3 py-1 rounded-full">
-                  {cat.recipeCount} recipe{cat.recipeCount === 1 ? "" : "s"}
-                </span>
+                <div className="p-6 space-y-3">
+                  <p className="text-xs text-[#524F4C] leading-relaxed line-clamp-2">
+                    {cat.description}
+                  </p>
+
+                  <div className="flex items-center justify-between text-xs pt-1">
+                    <span className="text-[#6E6B68] font-medium">Indexed Content:</span>
+                    <span className="font-extrabold text-[#1F1D1B] bg-[#FAF8F5] border border-[#EFE6DD] px-3 py-1 rounded-full">
+                      {cat.recipeCount} recipe{cat.recipeCount === 1 ? "" : "s"}
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <h3 className="text-lg font-extrabold text-[#1F1D1B] group-hover:text-[#E8734A] transition-colors">
-                  {cat.name}
-                </h3>
-                <span className="text-[11px] font-mono text-[#6E6B68] block pt-0.5">
-                  /{cat.slug}
-                </span>
-              </div>
-
-              <p className="text-xs text-[#524F4C] leading-relaxed line-clamp-2">
-                {cat.description}
-              </p>
-            </div>
-
-            <div className="pt-3 border-t border-[#EFE6DD] flex items-center justify-between text-xs">
-              <Link
-                href={`/categories/${cat.slug}`}
-                target="_blank"
-                className="text-[#E8734A] font-bold hover:underline"
-              >
-                View on Live Site ↗
-              </Link>
-
-              <div className="flex items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => openEditModal(cat)}
-                  className="p-2 rounded-xl text-[#6E6B68] hover:text-[#1F1D1B] hover:bg-[#FDF6EF] transition-colors"
-                  title="Edit Category"
+              <div className="p-6 pt-3 border-t border-[#EFE6DD] flex items-center justify-between text-xs">
+                <Link
+                  href={`/categories/${cat.slug}`}
+                  target="_blank"
+                  className="text-[#E8734A] font-extrabold hover:underline flex items-center gap-1"
                 >
-                  <Edit2 className="w-4 h-4" />
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setDeletingId(cat.id)}
-                  className="p-2 rounded-xl text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-colors"
-                  title="Delete Category"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                  <span>Preview Live</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </Link>
+
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={() => openEditModal(cat)}
+                    className="p-2 rounded-xl text-[#6E6B68] hover:text-[#1F1D1B] hover:bg-[#FAF8F5] transition-colors cursor-pointer"
+                    title="Edit Category"
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDeletingId(cat.id)}
+                    className="p-2 rounded-xl text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-colors cursor-pointer"
+                    title="Delete Category"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        /* Table View */
+        <div className="bg-white rounded-3xl border border-[#EFE6DD] shadow-xs overflow-hidden">
+          <table className="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr className="bg-[#FAF8F5] border-b border-[#EFE6DD] text-[#6E6B68] font-extrabold uppercase text-[10px] tracking-wider">
+                <th className="py-4 px-6">Category</th>
+                <th className="py-4 px-4">URL Slug</th>
+                <th className="py-4 px-4">Description</th>
+                <th className="py-4 px-4">Recipes</th>
+                <th className="py-4 px-6 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#EFE6DD]">
+              {filteredCategories.map((cat) => (
+                <tr key={cat.id} className="hover:bg-[#FAF8F5]/50 transition-colors">
+                  <td className="py-4 px-6 font-extrabold text-[#1F1D1B]">
+                    {cat.name}
+                  </td>
+                  <td className="py-4 px-4 font-mono text-[#6E6B68]">
+                    /{cat.slug}
+                  </td>
+                  <td className="py-4 px-4 text-[#524F4C] max-w-xs truncate">
+                    {cat.description}
+                  </td>
+                  <td className="py-4 px-4 font-bold text-[#1F1D1B]">
+                    {cat.recipeCount} recipes
+                  </td>
+                  <td className="py-4 px-6 text-right">
+                    <div className="flex items-center justify-end gap-1">
+                      <button
+                        type="button"
+                        onClick={() => openEditModal(cat)}
+                        className="p-2 rounded-xl text-[#6E6B68] hover:text-[#1F1D1B] hover:bg-[#FAF8F5]"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setDeletingId(cat.id)}
+                        className="p-2 rounded-xl text-rose-500 hover:text-rose-700 hover:bg-rose-50"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Create / Edit Category Modal */}
       {isModalOpen && (
@@ -276,7 +374,7 @@ export default function AdminCategoriesPage() {
               <button
                 type="button"
                 onClick={() => setIsModalOpen(false)}
-                className="p-2 text-[#6E6B68] hover:text-[#1F1D1B] rounded-xl hover:bg-[#FDF6EF]"
+                className="p-2 text-[#6E6B68] hover:text-[#1F1D1B] rounded-xl hover:bg-[#FAF8F5]"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -298,7 +396,7 @@ export default function AdminCategoriesPage() {
                     }
                   }}
                   placeholder="e.g. Soups & Swallows"
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-semibold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-semibold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
               </div>
 
@@ -311,7 +409,7 @@ export default function AdminCategoriesPage() {
                   value={formSlug}
                   onChange={(e) => setFormSlug(e.target.value)}
                   placeholder="e.g. nigerian-soups"
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-mono text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-mono text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
               </div>
 
@@ -324,7 +422,7 @@ export default function AdminCategoriesPage() {
                   value={formDescription}
                   onChange={(e) => setFormDescription(e.target.value)}
                   placeholder="Brief description for category Hub page..."
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-medium text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 />
               </div>
 
@@ -335,7 +433,7 @@ export default function AdminCategoriesPage() {
                 <select
                   value={formIcon}
                   onChange={(e) => setFormIcon(e.target.value)}
-                  className="w-full bg-[#FDF6EF] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
+                  className="w-full bg-[#FAF8F5] border border-[#EFE6DD] rounded-2xl px-4 py-3 text-xs font-bold text-[#1F1D1B] focus:outline-none focus:border-[#E8734A]"
                 >
                   <option value="Soup">Soup (Traditional Soups)</option>
                   <option value="Utensils">Utensils (Rice & Stews)</option>
@@ -350,13 +448,13 @@ export default function AdminCategoriesPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="flex-1 bg-[#FDF6EF] border border-[#EFE6DD] text-[#1F1D1B] text-xs font-bold py-3.5 rounded-2xl hover:bg-gray-100"
+                  className="flex-1 bg-[#FAF8F5] border border-[#EFE6DD] text-[#1F1D1B] text-xs font-bold py-3.5 rounded-2xl hover:bg-gray-100"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 bg-[#E8734A] text-white text-xs font-bold py-3.5 rounded-2xl hover:bg-[#D66239] shadow-xs"
+                  className="flex-1 bg-[#E8734A] text-white text-xs font-bold py-3.5 rounded-2xl hover:bg-[#D66239] shadow-xs cursor-pointer"
                 >
                   {editingCategory ? "Save Changes" : "Create Category"}
                 </button>
@@ -383,7 +481,7 @@ export default function AdminCategoriesPage() {
               <button
                 type="button"
                 onClick={() => setDeletingId(null)}
-                className="flex-1 bg-[#FDF6EF] border border-[#EFE6DD] text-[#1F1D1B] text-xs font-bold py-3 rounded-2xl"
+                className="flex-1 bg-[#FAF8F5] border border-[#EFE6DD] text-[#1F1D1B] text-xs font-bold py-3 rounded-2xl"
               >
                 Cancel
               </button>
