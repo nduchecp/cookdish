@@ -28,22 +28,39 @@ c:\Users\Promise\3D Objects\RECIPE APP
 │   │   │   └── page.tsx              # Coded mobile search input with searchParams sync
 │   │   ├── layout.tsx                # Coded responsive desktop sidebar & mobile bottom nav
 │   │   └── page.tsx                  # Coded Home feed, hero banner & recipe grid
+│   ├── admin/
+│   │   ├── categories/
+│   │   │   └── page.tsx              # Coded Category Management CRUD (Soups, Rice, Grills, Snacks, International)
+│   │   ├── moderation/
+│   │   │   └── page.tsx              # Coded Moderation Desk (Pending Review & Reported Content tabs)
+│   │   ├── recipes/
+│   │   │   ├── [id]/
+│   │   │   │   └── page.tsx          # Coded Edit Recipe form (pre-populated atomic fields)
+│   │   │   └── page.tsx              # Coded Recipe Management catalog table & delete modal
+│   │   ├── users/
+│   │   │   └── page.tsx              # Coded User Directory search & Suspend/Ban modal
+│   │   ├── layout.tsx                # Coded Admin executive shell with sidebar navigation
+│   │   └── page.tsx                  # Coded Admin Overview dashboard (4 stat count cards & activity feed)
 │   ├── recipe/
 │   │   └── [source]/
 │   │       └── [id]/
 │   │           ├── cook/
-│   │           │   ├── CookingClientView.tsx # Coded z-[100] fullscreen cooking assistant
+│   │           │   ├── CookingClientView.tsx # Coded z-[100] fullscreen cooking assistant with audio chimes & confetti
 │   │           │   └── page.tsx             # Coded async route params fetcher
 │   │           ├── RecipeClientView.tsx     # Coded 3-col responsive detail layout & unified CTA
 │   │           └── page.tsx                 # Coded async recipe detail loader
 │   ├── globals.css                   # Coded design system tokens & custom utilities
-│   └── layout.tsx                    # Coded Root layout & fixed mobile touch blocker
+│   └── layout.tsx                    # Coded Root layout, PWA metadata & SWRegister
 ├── lib/
 │   └── api/
 │       ├── recipes.ts                # Coded local recipes database, atomic ingredients, detailed chef steps & multi-API aggregator
 │       ├── spoonacular.ts            # Coded Spoonacular API fetcher
 │       ├── edamam.ts                 # Coded Edamam API fetcher
 │       └── mealdatabase.ts           # Coded TheMealDB API fetcher
+├── public/
+│   ├── manifest.json                 # Coded Web App Manifest configuration
+│   ├── sw.js                         # Coded Stale-While-Revalidate offline Service Worker
+│   └── icon-*.png                    # Coded binary PNG PWA icon assets
 ├── README.md                         # Coded project documentation & deployment guide
 └── SUMMARIZE.MD                      # Coded master accomplishment summary
 ```
@@ -52,50 +69,51 @@ c:\Users\Promise\3D Objects\RECIPE APP
 
 ## 💻 Detailed Code Implementation Breakdown
 
-### 1. `lib/api/recipes.ts` (Core Recipe Data & Multi-API Aggregator)
-- **Coded `NIGERIAN_LOCAL_DISHES` Array**: Defined 16 normalized recipes with atomic ingredients, explicit step timings, heat levels, and professional chef techniques:
-  - `Authentic Nigerian Egusi Soup` (Frying egusi balls 8-10 mins, stock simmer 15 mins)
-  - `Traditional Igbo Oha Soup (Ofe Oha)` (Boiling/pounding cocoyam paste 25 mins, hand-shredding Oha leaves)
-  - `Traditional Nigerian Ogbono Draw Soup (Ofe Ogbono)` (Dissolving ogbono in warm palm oil, 15 min draw simmer uncovered)
-  - `Authentic Nigerian Fresh Okra Soup (Ofe Okwuru)` (Fresh chopped okra, 5 min medium-low simmer uncovered)
-  - `Pounded Yam (Iyan)` (Boiling white puna yam 20-25 mins, mortar pounding, adding hot yam water)
-  - `Smoky Nigerian Party Jollof Rice` (Tatashe pepper base, foil seal, 35 min steam & charred smoke finish)
-  - `Special Ofada Rice & Ayamase Stew` (Bleaching palm oil 12-15 mins safely, sautéing iru, coarse green pepper fry)
-  - `Spicy Beef Suya`, `Peppered Goat Meat (Asun)` (Grilling ribbons 12-15 mins, roasting goat meat 20 mins)
-  - `Corn Moi Moi`, `Beans Moi Moi` (Banana leaf wrapping, 45-50 min steam setting)
-  - `Golden Puff-Puff`, `Crunchy Chin Chin`, `Classic Beef Meat Pie` (Proofing 50 mins, dough rolling, butter rubbing, shortcrust baking)
-  - `International Cuisines`: Added seed recipes for **Classic Italian Spaghetti Carbonara**, **Japanese Chicken Teriyaki Rice Bowl**, and **Authentic Mexican Beef Tacos**.
-- **Coded `searchAllRecipeAPIs(query)`**: Asynchronous aggregator running concurrent requests across TheMealDB, Spoonacular, Edamam, DummyJSON, and local dishes via `Promise.allSettled()`.
+### 1. `app/admin/layout.tsx` (Admin Executive Shell)
+- **Coded Sidebar Navigation**: Responsive collapsible sidebar with dark executive styling (`#1F1D1B`), brand logo, path highlighting, and quick return link to the live consumer web app (`/`).
+- **Coded Top Bar**: Live search input, system status pill (`System Normal`), notification bell badge, and quick recipe creation trigger.
+- **Coded Security Comment**: Includes `// TODO: gate this route once auth/roles exist` as requested in spec.
 
 ---
 
-### 2. `app/recipe/[source]/[id]/cook/CookingClientView.tsx` (Fullscreen Cooking Assistant)
-- **Coded Full-Screen Immersive Layout**: Applied `fixed inset-0 z-[100] bg-[#1F1D1B]` overlay hiding mobile bottom tab bar conflicts.
-- **Coded Robust Timer `useEffect`**: Refactored dependency array to `[isTimerRunning]` ONLY, enabling smooth countdowns without interval tearing.
-- **Coded 0ms Instant Touch Controls**: Handled `Next Step`, `Previous Step`, `Start/Pause Timer`, and `Reset Timer` with zero tap delay.
+### 2. `app/admin/page.tsx` (Admin Overview Dashboard)
+- **Coded 4 Stat Count Cards**:
+  1. *Total Recipes* (16)
+  2. *Total Users* (128)
+  3. *Pending Moderation* (3)
+  4. *Open User Reports* (2)
+- **Coded Recent Activity Feed**: Real-time log of recipe submissions, community flags, category creations, and approval status badges.
+- **Coded Category Breakdown**: Visual overview of category recipe density.
 
 ---
 
-### 3. `app/(tabs)/profile/page.tsx` (Executive Profile Hub)
-- **Coded Hero Chef Banner Card**: Dark glassmorphism header card with gradient avatar frame, verified chef badge, and interactive `handleShare()` clipboard function.
-- **Coded 4 Culinary Stats Cards**: *14 Recipes Cooked*, *12 Favorite Dishes*, *4 Custom Authored Recipes*, *7 Days Cooking Streak*.
-- **Coded Full-Width Sign Out Action Button**: Styled prominent rose action button (`bg-rose-50 hover:bg-rose-600 hover:text-white py-4 rounded-2xl`).
+### 3. `app/admin/categories/page.tsx` (Category Management & Taxonomy Resolution)
+- **Coded Category Taxonomy CRUD**: Resolves QA taxonomy requirements by pre-populating all 5 live category groupings (*Soups & Swallows*, *Rice & Stews*, *Grills & Suya*, *Bakery & Snacks*, *International Cuisines*).
+- **Coded Create & Edit Category Modal**: Full form managing category name, slug, description, and vector icon assignment (`Soup`, `Utensils`, `Flame`, `Cookie`, `Globe`).
+- **Coded Delete Confirmation Modal**: Safe deletion prompt for unassigning categories.
 
 ---
 
-### 4. `app/(tabs)/profile/planner/page.tsx` (Interactive Meal Planner)
-- **Coded Interactive State Machine (`plannedMeals`)**: Managed day-by-day weekly menu schedule (Mon–Sun).
-- **Coded `+ Add Meal` Recipe Picker Modal**: Modal with meal slot selection (**Breakfast**, **Lunch**, **Dinner**, **Snack**), real-time recipe search, and slot scheduling.
+### 4. `app/admin/recipes/page.tsx` & `[id]/page.tsx` (Recipe Management & Editor)
+- **Coded Catalog Table**: Searchable, category-filtered list of recipes with thumbnail images, ingredient counts, rating indicators, and direct links to live consumer views.
+- **Coded Edit Recipe Form (`/admin/recipes/[id]`)**: Full editing workspace pre-populating recipe fields (title, description, category, region, prep/cook time, difficulty, atomic ingredients list, and step-by-step instructions with duration tags).
+- **Coded Delete Confirmation**: Confirmation modal for catalog removal.
 
 ---
 
-### 5. `app/(tabs)/profile/shopping-list/page.tsx` (Smart Shopping List)
-- **Coded Atomic Ingredients Array**: Populated shopping list with single, atomic ingredients (*Ground Egusi, Palm Oil, Oha Leaves, Stockfish, Yam, Parboiled Rice, Tatashe, Suya Yaji, Sirloin Steak*).
-- **Coded Custom Ingredient Input Form (`handleAddItem`)**: Allows adding extra items with custom quantities.
-- **Coded Category Filter Chips**: Filter by **All**, **Soups & Swallows**, **Rice & Stews**, **Grills & Snacks**, or **General Pantry**.
+### 5. `app/admin/moderation/page.tsx` (Moderation Desk)
+- **Coded 2 Supervision Tabs**:
+  - *Pending Review*: Renders submitted recipe cards with 1-click **Approve** and **Reject** actions (reject opens a mandatory feedback reason modal).
+  - *Reported Content*: Displays user reports grouped by recipe with report counts, reporter username, reason text, and **Dismiss** / **Remove Content** actions.
 
 ---
 
-### 6. Git & Vercel Deployment
+### 6. `app/admin/users/page.tsx` (User Directory)
+- **Coded User Directory Table**: Searchable table with role pills (*Admin*, *Chef*, *User*) and account status indicators (*Active*, *Suspended*, *Banned*).
+- **Coded Suspend / Ban Action Modal**: Mandatory reason input field for enforcing account suspensions or bans, updating local state seamlessly.
+
+---
+
+### 📦 Git & Vercel Deployment
 - **GitHub Repository**: Pushed code to [https://github.com/nduchecp/cookdish](https://github.com/nduchecp/cookdish).
 - **Vercel Production Deployment**: Deployed live on Vercel with 100% uptime and instant performance.
