@@ -26,6 +26,7 @@ export default function AdminEditRecipePage({
   const { id } = use(params);
   const router = useRouter();
   const [savedSuccess, setSavedSuccess] = useState(false);
+  const isNew = id === "new";
 
   // Form states
   const [title, setTitle] = useState("");
@@ -38,10 +39,27 @@ export default function AdminEditRecipePage({
   const [servings, setServings] = useState(4);
   const [imageUrl, setImageUrl] = useState("");
 
-  const [ingredients, setIngredients] = useState<Array<{ name: string; amount: string }>>([]);
-  const [instructions, setInstructions] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<Array<{ name: string; amount: string }>>([
+    { name: "", amount: "" },
+  ]);
+  const [instructions, setInstructions] = useState<string[]>([""]);
 
   useEffect(() => {
+    if (isNew) {
+      setTitle("");
+      setDescription("");
+      setCategory("Nigerian Soups");
+      setArea("Nigerian");
+      setPrepTime(20);
+      setCookTime(30);
+      setDifficulty("Medium");
+      setServings(4);
+      setImageUrl("");
+      setIngredients([{ name: "", amount: "" }]);
+      setInstructions([""]);
+      return;
+    }
+
     const existing = NIGERIAN_LOCAL_DISHES.find((r) => r.id === id) || NIGERIAN_LOCAL_DISHES[0];
     if (existing) {
       setTitle(existing.title);
@@ -56,7 +74,7 @@ export default function AdminEditRecipePage({
       setIngredients(existing.ingredients || []);
       setInstructions(existing.instructions || []);
     }
-  }, [id]);
+  }, [id, isNew]);
 
   const handleAddIngredient = () => {
     setIngredients((prev) => [...prev, { name: "", amount: "" }]);
@@ -112,30 +130,32 @@ export default function AdminEditRecipePage({
           </Link>
           <div className="min-w-0">
             <span className="text-[#E8734A] text-[10px] font-extrabold tracking-widest uppercase block">
-              Recipe Editor
+              {isNew ? "Create Recipe" : "Recipe Editor"}
             </span>
             <h1 className="text-base sm:text-lg font-extrabold text-[#1F1D1B] truncate">
-              {title || "Edit Recipe"}
+              {isNew ? (title || "New Catalog Recipe") : (title || "Edit Recipe")}
             </h1>
           </div>
         </div>
 
         <div className="flex items-center gap-2 shrink-0">
-          <Link
-            href={`/recipe/user/${id}`}
-            target="_blank"
-            className="hidden sm:inline-flex bg-[#FAF8F5] border border-[#EFE6DD] hover:border-[#E8734A] text-[#1F1D1B] text-xs font-bold px-4 py-2.5 rounded-xl transition-all items-center gap-1.5 shadow-2xs"
-          >
-            <Eye className="w-4 h-4 text-[#E8734A]" />
-            <span>Preview</span>
-          </Link>
+          {!isNew && (
+            <Link
+              href={`/recipe/user/${id}`}
+              target="_blank"
+              className="hidden sm:inline-flex bg-[#FAF8F5] border border-[#EFE6DD] hover:border-[#E8734A] text-[#1F1D1B] text-xs font-bold px-4 py-2.5 rounded-xl transition-all items-center gap-1.5 shadow-2xs"
+            >
+              <Eye className="w-4 h-4 text-[#E8734A]" />
+              <span>Preview</span>
+            </Link>
+          )}
           <button
             type="submit"
             form="recipe-edit-form"
             className="bg-[#E8734A] hover:bg-[#D66239] text-white text-xs font-extrabold px-5 py-2.5 rounded-xl flex items-center gap-1.5 shadow-xs transition-all cursor-pointer active:scale-95"
           >
             <Save className="w-4 h-4" />
-            <span>Save Recipe</span>
+            <span>{isNew ? "Publish Recipe" : "Save Recipe"}</span>
           </button>
         </div>
       </div>
@@ -143,7 +163,11 @@ export default function AdminEditRecipePage({
       {savedSuccess && (
         <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-extrabold flex items-center gap-2.5 animate-in fade-in duration-200 shadow-xs">
           <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
-          <span>Recipe modifications saved successfully! Returning to recipe list...</span>
+          <span>
+            {isNew
+              ? "New recipe created and published successfully! Returning to catalog..."
+              : "Recipe modifications saved successfully! Returning to catalog..."}
+          </span>
         </div>
       )}
 
